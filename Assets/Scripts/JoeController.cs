@@ -22,8 +22,17 @@ public class JoeController : MonoBehaviour
     public float jumpSpeed;
     public float grav;
     private bool canJump;
+    private bool tryJump;
     private bool useJump;
-   
+    private bool queueJump;
+    public float queueJumpBuffer;
+    public float coyoteTimeBuffer;
+    public bool canCoyote;
+    public bool wasOnGroundLastFrame;
+    private bool isGrounded;
+    public float coyoteStartTime;
+    public float coyoteTime;
+    public float maxFallSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,47 +71,104 @@ public class JoeController : MonoBehaviour
             playerInput.x = 0f;
         }
 
-        if (useJump)
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            canJump = false;
+            tryJump = true;
+          
+            Debug.Log("TRY JUMP!");
+
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && canJump)
+        if (canCoyote)
         {
-            canJump = false;
-            useJump = true;
-            Debug.Log("JUMP!");
+           coyoteTime += Time.deltaTime;
 
+            if (coyoteTime > coyoteTimeBuffer)
+            {
+                canCoyote = false;
+            }
         }
-       
 
-        //turnFriction = hDecel * 3;
-      
+
     }
 
     private void FixedUpdate()
     {
         GroundMovement();
-        bool grounded = GroundCheck();
-        if (!grounded)
+        wasOnGroundLastFrame = isGrounded;
+
+        isGrounded = GroundCheck();
+
+        if (!isGrounded && wasOnGroundLastFrame)
         {
-            canJump = false;
-            rb.linearVelocityY -= grav;
+            canCoyote = true;
+            coyoteTime = Time.deltaTime;
+
+        }
+
+        
+        if (tryJump)
+        {
+            TryJump(isGrounded);
+        }
+       
+        if (!isGrounded)
+        {
+            rb.linearVelocityY -= grav; 
         }
         else
         {
-            rb.linearVelocityY = 0f;
-            canJump = true;
+            if (queueJump)
+            {
+                UseJump();
+                queueJump = false;
+            }
+               
         }
 
-        if (useJump)
+        if (rb.position.y < -5f)
         {
-            rb.linearVelocityY = jumpSpeed;
-            useJump = false;
+            rb.position = new Vector2(0f, 0f);
+        }
+
+        if (rb.linearVelocity.y < maxFallSpeed)
+        {
+            rb.linearVelocityY = maxFallSpeed;
         }
     }
     
         
+    private void TryJump(bool onGround)
+    {
+        tryJump = false;
+
+        RaycastHit2D hit = Physics2D.BoxCast(rb.position, Vector2.one, 0f, Vector2.down, queueJumpBuffer, groundLayer);
+
+        if (onGround)
+        {
+            UseJump();
+        }
+       
+
+        else if (!onGround && hit && rb.linearVelocityY < 0)
+        {
+            queueJump = true;
+            Debug.Log("QUEUED");
+        }
+
+        else if (canCoyote && rb.linearVelocityY < 0)
+        {
+            Debug.Log("YOTED");
+            canCoyote = false;
+            UseJump();
+        }
+    }
+
+    private void UseJump()
+    {
+        rb.linearVelocityY = jumpSpeed;
+    }
+
 
     private void GroundMovement()
     {
@@ -143,7 +209,7 @@ public class JoeController : MonoBehaviour
 
         if (hit)
         {
-            Debug.Log("GROUNDED");
+            //Debug.Log("GROUNDED");
             return true;
         }
 

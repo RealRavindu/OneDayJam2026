@@ -387,6 +387,13 @@ MonoBehaviour:
     m_Bits: 1024
   jumpSpeed: 13
   grav: 0.8
+  queueJumpBuffer: 1.5
+  coyoteTimeBuffer: 0.2
+  canCoyote: 0
+  wasOnGroundLastFrame: 0
+  coyoteStartTime: 0
+  coyoteTime: 0
+  maxFallSpeed: -20
 --- !u!61 &897132023
 BoxCollider2D:
   m_ObjectHideFlags: 0
