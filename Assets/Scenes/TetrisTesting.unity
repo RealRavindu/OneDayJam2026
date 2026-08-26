@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 447584559}
   - component: {fileID: 447584558}
   - component: {fileID: 447584557}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -668,6 +668,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GamemANAGER
   _tilemap: {fileID: 0}
   gameInPlay: 1
+  score: 0
+  timeToSpawnATetromino: 1.87
+  tetrominoFallingSpeed: 6.33
+  ActivelyFallingTetrisList: []
+  spawnPosition: {x: -1, y: 8, z: 0}
   tetrominoPrefabsList:
   - {fileID: 7657339435635629917, guid: 3f26b238fed18c34d970733610c05062, type: 3}
   - {fileID: 226815947724072949, guid: 76c5d4fe24354b041ae3f3e52dbd5418, type: 3}
@@ -676,11 +681,6 @@ MonoBehaviour:
   - {fileID: 8061353950662794027, guid: bc0fb97008a2aed4887dcf582ccf7ef9, type: 3}
   - {fileID: 4216903257809070806, guid: 5abc26b234dcdf649af4ff9f2dc4b008, type: 3}
   - {fileID: 3822289112878974839, guid: 933f116572224f64e8bb221fb3ddfc09, type: 3}
-  timeToSpawnATetromino: 3
-  currentTime: 0
-  tetrominoFallingSpeed: 1
-  score: 0
-  spawnPosition: {x: -1, y: 8, z: 0}
 --- !u!4 &1772471087
 Transform:
   m_ObjectHideFlags: 0
