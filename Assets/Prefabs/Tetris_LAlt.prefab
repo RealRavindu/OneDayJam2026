@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7270316439248877823}
   - component: {fileID: 6168721907626112769}
   - component: {fileID: 6621693519770515451}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tetris_LAlt
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   - {fileID: 4968715803181815276}
   tetrominoLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!50 &6168721907626112769
 Rigidbody2D:
   serializedVersion: 5

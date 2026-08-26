@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 2422323263359935242}
   - component: {fileID: 811533833779111455}
   - component: {fileID: 6324023702437155103}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tetris_Square
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -610,7 +610,7 @@ MonoBehaviour:
   - {fileID: 496213208739689283}
   tetrominoLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!50 &811533833779111455
 Rigidbody2D:
   serializedVersion: 5

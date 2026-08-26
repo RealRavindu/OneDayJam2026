@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 4670741294397275967}
   - component: {fileID: 298051215341512030}
   - component: {fileID: 426879241917304475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tetris_Line
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
   - {fileID: 8241571517466349229}
   tetrominoLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!50 &298051215341512030
 Rigidbody2D:
   serializedVersion: 5
