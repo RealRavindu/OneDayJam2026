@@ -5,16 +5,15 @@ using UnityEngine.Tilemaps;
 public class GamemANAGER : MonoBehaviour 
 {
     public static GamemANAGER instance;
-    [Header("Prolly will get rid of these variables")]
-    [SerializeField] private Tilemap _tilemap;
-    [HideInInspector] public Dictionary<Vector3Int , Node> nodes = new Dictionary<Vector3Int , Node>();
+
     [Header("Gameplay variables")]
     public bool gameInPlay = true;
     public int score;
     public float timeToSpawnATetromino, tetrominoFallingSpeed;
     public List<Tetris> ActivelyFallingTetrisList = new List<Tetris>();
     [SerializeField] Vector3Int spawnPosition = new Vector3Int(-1, 8, 0); //probably dont change this or find a better way of doing this lul. dependant on camera positioning and allat.
-
+    public float cameraMoveSpeed;
+    private Tilemap _tileMap;
     [Header("Prefubs")]
     public List<GameObject> tetrominoPrefabsList = new List<GameObject>();
     private float currentTime;
@@ -32,19 +31,15 @@ public class GamemANAGER : MonoBehaviour
 
     private void Start()
     {
-        _tilemap = FindAnyObjectByType<Tilemap>();
-        foreach(Vector3Int pos in _tilemap.cellBounds.allPositionsWithin)
-        {
-            nodes[pos] = new Node(pos);
-        }
-
         TetriiGroup = new GameObject("TetriiGroup");
+        _tileMap = FindAnyObjectByType<Tilemap>();
     }
 
     private void Update()
     {
         if(gameInPlay) currentTime += Time.deltaTime;
 
+        MoveCameraUp();
 
         if ( currentTime > timeToSpawnATetromino)
         {
@@ -63,8 +58,12 @@ public class GamemANAGER : MonoBehaviour
         tetrisScript.EnableFalling();
     }
 
-    public bool CheckIfTileIsAtLocation(Vector3 position)
+    public void MoveCameraUp()
     {
-        return (_tilemap.HasTile(_tilemap.WorldToCell(position)));
+        Camera.main.transform.position += Vector3.up * cameraMoveSpeed * Time.deltaTime;
+
+        //TILE MAP BOX FILL OR SOMETHNIG HERE
     }
+
+
 }

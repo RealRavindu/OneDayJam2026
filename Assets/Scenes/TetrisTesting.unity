@@ -666,13 +666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6078bf0873bfd1a4d97cbd792b78d138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamemANAGER
-  _tilemap: {fileID: 0}
   gameInPlay: 1
   score: 0
   timeToSpawnATetromino: 1.87
   tetrominoFallingSpeed: 6.33
   ActivelyFallingTetrisList: []
   spawnPosition: {x: -1, y: 8, z: 0}
+  cameraMoveSpeed: 0
   tetrominoPrefabsList:
   - {fileID: 7657339435635629917, guid: 3f26b238fed18c34d970733610c05062, type: 3}
   - {fileID: 226815947724072949, guid: 76c5d4fe24354b041ae3f3e52dbd5418, type: 3}
