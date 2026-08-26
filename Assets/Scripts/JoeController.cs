@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class JoeController : MonoBehaviour
 {
+
+    private int health;
+    public int maxHealth;
     private Rigidbody2D rb;
     private Vector2 playerInput;
     //Horizontal Movement
@@ -43,6 +46,8 @@ public class JoeController : MonoBehaviour
         hAccel = hMaxSpeed / hAccelTime;
 
         hDecel = hMaxSpeed / hDecelTime;
+
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -216,6 +221,20 @@ public class JoeController : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 11)
+        {
+            Debug.Log("OUCH!");
+            health--;
+
+            if (health == 0)
+            {
+                Debug.Log("Ya ded");
+            }
         }
     }
 }
