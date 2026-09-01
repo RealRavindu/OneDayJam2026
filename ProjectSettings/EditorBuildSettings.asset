@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: e0e00d3de021b73458735fba393546d1
+  - enabled: 1
+    path: Assets/Scenes/TetrisTesting.unity
+    guid: 4433d987041c4f14ab6a0029fa868513
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

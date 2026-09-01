@@ -12,11 +12,12 @@ public class Tetris : MonoBehaviour
             _falling = value;
             if (!value) //if not falling
             {
+                Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}");
                 GamemANAGER.instance.activeTetris = null;
             }
         }
     }
-    private bool _falling;
+    private bool _falling = false;
     public List<GameObject> blocksList = new List<GameObject>();
     public LayerMask tetrominoLayerMask;
     private void FixedUpdate()
