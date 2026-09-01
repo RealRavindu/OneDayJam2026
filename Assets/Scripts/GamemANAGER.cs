@@ -14,6 +14,7 @@ public class GamemANAGER : MonoBehaviour
     [SerializeField] Vector3Int spawnPosition = new Vector3Int(-1, 8, 0); //probably dont change this or find a better way of doing this lul. dependant on camera positioning and allat.
     public float cameraMoveSpeed;
     private Tilemap _tileMap;
+    [SerializeField] private TileBase tile;
     [Header("Prefubs")]
     public List<GameObject> tetrominoPrefabsList = new List<GameObject>();
     private float currentTime;
@@ -62,7 +63,30 @@ public class GamemANAGER : MonoBehaviour
     {
         Camera.main.transform.position += Vector3.up * cameraMoveSpeed * Time.deltaTime;
 
-        //TILE MAP BOX FILL OR SOMETHNIG HERE
+        //adding tiles above camera
+        Vector3 topLeftCorner = new Vector3(-4.5f, Camera.main.ViewportToWorldPoint(Vector2.one).y + 1);
+        Vector3Int topLeftCornerINT = _tileMap.WorldToCell(topLeftCorner);
+        for (int i = 0; i < 10; i++)
+        {
+            //setting individual tiles
+            if (!_tileMap.HasTile(topLeftCornerINT))
+            {
+                _tileMap.SetTile(topLeftCornerINT, tile);
+            }
+            topLeftCornerINT.x += 1;
+        }
+
+        //remove tiles below camera
+        Vector3 bottomLeftCorner = new Vector3(-4.5f, Camera.main.ViewportToWorldPoint(Vector2.zero).y - 1);
+        Vector3Int bottomLeftCornerINT = _tileMap.WorldToCell(bottomLeftCorner);
+        for (int i = 0; i < 10; i++)
+        {
+            if (_tileMap.HasTile(bottomLeftCornerINT))
+            {
+                _tileMap.SetTile(bottomLeftCornerINT, null);
+            }
+            bottomLeftCornerINT.x += 1;
+        }
     }
 
 
