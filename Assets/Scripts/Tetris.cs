@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.LowLevelPhysics2D;
+using Unity.VisualScripting;
 
 public class Tetris : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public class Tetris : MonoBehaviour
             _falling = value;
             if (!value) //if not falling
             {
-                GamemANAGER.instance.ActivelyFallingTetrisList.Remove(this);
+                Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}");
+                GamemANAGER.instance.activeTetris = null;
             }
         }
     }
-    private bool _falling;
+    private bool _falling = false;
     public List<GameObject> blocksList = new List<GameObject>();
     public LayerMask tetrominoLayerMask;
     private void FixedUpdate()
@@ -35,9 +37,18 @@ public class Tetris : MonoBehaviour
 
     public void LandedOnTetromino()
     {
-        falling = false;
-        ResetTetrominoPositionToMatchGrid();
+        if (falling)
+        {
+            falling = false;
+            ResetTetrominoPositionToMatchGrid();
+        }
 
+        //check if any block is out of bounds above camera
+        foreach (GameObject block in blocksList)
+        {
+            float camHeightInWorld = Camera.main.ViewportToWorldPoint(Vector2.one).y;
+            if (block.transform.position.y > camHeightInWorld) GamemANAGER.instance.gameInPlay = false;
+        }
     }
     private void CheckCollision()
     {
@@ -63,6 +74,7 @@ public class Tetris : MonoBehaviour
         
     }
 
+    
     private void ResetTetrominoPositionToMatchGrid()
     {
         foreach(GameObject block in blocksList)

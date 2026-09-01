@@ -3,35 +3,45 @@ using UnityEngine;
 public class TetrisController : MonoBehaviour
 {
     public KeyCode rotateClockwise, rotateCounterClockwise, moveLeft, moveRight, boost;
+    public KeyCode rotateClockwiseAlt, rotateCounterClockwiseAlt, moveLeftAlt, moveRightAlt, boostAlt;
     public float boostValue;
 
     private void Update()
     {
-        if (Input.GetKeyDown(rotateClockwise)) RotateClockwise();
-        if (Input.GetKeyDown(rotateCounterClockwise)) RotateCounterClockwise();
-        if (Input.GetKeyDown(moveLeft)) MoveLeft();
-        if (Input.GetKeyDown(moveRight)) MoveRight();
-        if (Input.GetKeyDown(boost)) Boost();
-        if (Input.GetKeyUp(boost)) RemoveBoost();
+        if (GamemANAGER.instance.activeTetris != null)
+        {
+            if (Input.GetKeyDown(rotateClockwise) || Input.GetKeyDown(rotateClockwiseAlt)) RotateClockwise();
+            if (Input.GetKeyDown(rotateCounterClockwise) || Input.GetKeyDown(rotateCounterClockwiseAlt)) RotateCounterClockwise();
+            if (Input.GetKeyDown(moveLeft) || Input.GetKeyDown(moveLeftAlt)) MoveLeft();
+            if (Input.GetKeyDown(moveRight) || Input.GetKeyDown(moveRightAlt)) MoveRight();
+            if (Input.GetKeyDown(boost) || Input.GetKeyDown(boostAlt)) Boost();
+            if (Input.GetKeyUp(boost) || Input.GetKeyDown(boostAlt)) RemoveBoost();
+        }
+        
     }
 
     public void RotateClockwise()
     {
-        foreach(Tetris tetromino in GamemANAGER.instance.ActivelyFallingTetrisList)
-        {
-            tetromino.transform.Rotate(new Vector3(0,0,90));
-        }
+
+        GamemANAGER.instance.activeTetris.transform.Rotate(new Vector3(0, 0, 90));
+
     }
     public void RotateCounterClockwise()
     {
+
+        GamemANAGER.instance.activeTetris.transform.Rotate(new Vector3(0, 0, -90));
 
     }
     public void MoveLeft()
     {
 
+        GamemANAGER.instance.activeTetris.transform.position += Vector3.left;
+
     }
     public void MoveRight()
     {
+
+        GamemANAGER.instance.activeTetris.transform.position += Vector3.right;
 
     }
     public void Boost()
