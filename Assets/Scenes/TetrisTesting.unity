@@ -694,11 +694,11 @@ MonoBehaviour:
   moveLeft: 257
   moveRight: 259
   boost: 258
-  rotateClockwiseAlt: 0
-  rotateCounterClockwiseAlt: 0
-  moveLeftAlt: 0
-  moveRightAlt: 0
-  boostAlt: 0
+  rotateClockwiseAlt: 303
+  rotateCounterClockwiseAlt: 279
+  moveLeftAlt: 276
+  moveRightAlt: 275
+  boostAlt: 274
   boostValue: 1
 --- !u!4 &516311145
 Transform:
@@ -1184,9 +1184,9 @@ MonoBehaviour:
   tetrominoSpawnOffset: 0
   cameraMoveSpeed: 0.15
   tile: {fileID: 11400000, guid: 4d89099a63a5aa142b2ccc4de89a5c8f, type: 2}
-  firstScale: 0.5
-  secondScale: 0.3
-  thirdScale: 0.1
+  firstScale: 0.75
+  secondScale: 0.5
+  thirdScale: 0.3
   firstPos: {fileID: 337554775}
   secondPos: {fileID: 1919085319}
   thirdPos: {fileID: 50788279}

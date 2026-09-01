@@ -17,7 +17,10 @@ public class GamemANAGER : MonoBehaviour
             {
                 Debug.Log("Game started");
                 SpawnTetrominoAtTop(GenerateRandomTetromino());
-                SelectThreeTetrominoToSpawn();
+                SelectThreeTetrominoToAddToQueue();
+            } else
+            {
+                Debug.Log("Game over!");
             }
         }
     }
@@ -79,7 +82,7 @@ public class GamemANAGER : MonoBehaviour
         Debug.Log($"////// frame //////// tetrominos to spawn count: {tetrominosToSpawn.Count} ");
     }
 
-    public void SelectThreeTetrominoToSpawn()
+    public void SelectThreeTetrominoToAddToQueue()
     {
         Debug.Log("Selecting three pieces to spawn");
 
@@ -95,12 +98,15 @@ public class GamemANAGER : MonoBehaviour
 
         tetrominosToSpawn[0].transform.position = firstPos.position;
         tetrominosToSpawn[0].transform.localScale = Vector2.one *firstScale;
+        tetrominosToSpawn[0].transform.parent = firstPos;
 
         tetrominosToSpawn[1].transform.position = secondPos.position;
         tetrominosToSpawn[1].transform.localScale = Vector2.one * secondScale;
+        tetrominosToSpawn[1].transform.parent = secondPos;
 
         tetrominosToSpawn[2].transform.position = thirdPos.position;
         tetrominosToSpawn[2].transform.localScale = Vector2.one * thirdScale;
+        tetrominosToSpawn[2].transform.parent = thirdPos;
     }
     public Tetris GenerateRandomTetromino()
     {
@@ -115,6 +121,7 @@ public class GamemANAGER : MonoBehaviour
         Debug.Log("Spawning given piece at top of screen");
 
         Vector3Int spawnPosition = new Vector3Int(-1, (int)Camera.main.ViewportToWorldPoint(Vector2.one).y + tetrominoSpawnOffset);
+        tetromino.transform.parent = TetriiGroup.transform;
         tetromino.transform.position = spawnPosition;
         tetromino.transform.localScale = Vector2.one;
         activeTetris = tetromino;
