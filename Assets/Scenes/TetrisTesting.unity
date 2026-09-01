@@ -405,11 +405,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cab2996c1811544da29229d338e9393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TetrisController
-  rotateClockwise: 260
+  rotateClockwise: 9
   rotateCounterClockwise: 262
   moveLeft: 257
   moveRight: 259
   boost: 258
+  rotateClockwiseAlt: 0
+  rotateCounterClockwiseAlt: 0
+  moveLeftAlt: 0
+  moveRightAlt: 0
+  boostAlt: 0
   boostValue: 1
 --- !u!4 &516311145
 Transform:
@@ -717,12 +722,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6078bf0873bfd1a4d97cbd792b78d138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamemANAGER
-  gameInPlay: 1
   score: 0
-  timeToSpawnATetromino: 1.87
   tetrominoFallingSpeed: 3.67
-  ActivelyFallingTetrisList: []
-  spawnPosition: {x: -1, y: 8, z: 0}
+  tetrominoSpawnOffset: 0
   cameraMoveSpeed: 0.15
   tile: {fileID: 11400000, guid: 4d89099a63a5aa142b2ccc4de89a5c8f, type: 2}
   tetrominoPrefabsList:
@@ -828,7 +830,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -7
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

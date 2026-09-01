@@ -12,7 +12,7 @@ public class Tetris : MonoBehaviour
             _falling = value;
             if (!value) //if not falling
             {
-                GamemANAGER.instance.ActivelyFallingTetrisList.Remove(this);
+                GamemANAGER.instance.activeTetris = null;
             }
         }
     }

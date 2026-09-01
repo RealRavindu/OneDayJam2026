@@ -2,16 +2,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GamemANAGER : MonoBehaviour 
+public class GamemANAGER : MonoBehaviour
 {
     public static GamemANAGER instance;
 
     [Header("Gameplay variables")]
-    public bool gameInPlay = true;
+    public bool gameInPlay
+    {
+        get { return _gameInPlay; }
+        set
+        {
+            _gameInPlay = value;
+            if (value) SpawnTetrominoAtTop();
+        }
+    }
+    private bool _gameInPlay = false;
     public int score;
-    public float timeToSpawnATetromino, tetrominoFallingSpeed;
-    public List<Tetris> ActivelyFallingTetrisList = new List<Tetris>();
-    [SerializeField] Vector3Int spawnPosition = new Vector3Int(-1, 8, 0); //probably dont change this or find a better way of doing this lul. dependant on camera positioning and allat.
+    public float tetrominoFallingSpeed;
+    public Tetris activeTetris
+    {
+        get { return _activeTetris; }
+        set
+        {
+            _activeTetris = value;
+            if (value == null && gameInPlay)
+            {
+                SpawnTetrominoAtTop();
+            }
+        }
+    }
+    private Tetris _activeTetris;
+    [SerializeField] private int tetrominoSpawnOffset;
     public float cameraMoveSpeed;
     private Tilemap _tileMap;
     [SerializeField] private TileBase tile;
@@ -22,8 +43,8 @@ public class GamemANAGER : MonoBehaviour
 
     private GameObject TetriiGroup; //for organizing scene hierarchy while in game. Spawned Tetrominos will be parented under this empty gameobject
 
-    
-    
+
+
 
     private void Awake()
     {
@@ -34,29 +55,23 @@ public class GamemANAGER : MonoBehaviour
     {
         TetriiGroup = new GameObject("TetriiGroup");
         _tileMap = FindAnyObjectByType<Tilemap>();
+        gameInPlay = true;
     }
 
     private void Update()
     {
-        if(gameInPlay) currentTime += Time.deltaTime;
+        if (gameInPlay) MoveCameraUp();
 
-        MoveCameraUp();
-
-        if ( currentTime > timeToSpawnATetromino)
-        {
-            currentTime = 0;
-            SpawnTetrominoAtTop();
-        }
     }
 
     public void SpawnTetrominoAtTop()
     {
         int randomNum = Random.Range(0, tetrominoPrefabsList.Count);
         GameObject spawnedTetromino = Instantiate(tetrominoPrefabsList[randomNum], TetriiGroup.transform);
+        Vector3Int spawnPosition = new Vector3Int(-1, (int)Camera.main.ViewportToWorldPoint(Vector2.one).y + tetrominoSpawnOffset);
         spawnedTetromino.transform.position = spawnPosition;
-        Tetris tetrisScript = spawnedTetromino.GetComponent<Tetris>();
-        ActivelyFallingTetrisList.Add(tetrisScript);
-        tetrisScript.EnableFalling();
+        activeTetris = spawnedTetromino.GetComponent<Tetris>();
+        activeTetris.EnableFalling();
     }
 
     public void MoveCameraUp()
