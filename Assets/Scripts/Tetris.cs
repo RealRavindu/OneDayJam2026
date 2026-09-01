@@ -14,7 +14,7 @@ public class Tetris : MonoBehaviour
             if (!value) //if not falling
             {
                 Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}");
-                GamemANAGER.instance.activeTetris = null;
+                GameManager.instance.activeTetris = null;
             }
         }
     }
@@ -25,7 +25,7 @@ public class Tetris : MonoBehaviour
     {
         if (falling)
         {
-            transform.position = transform.position + Vector3.down * GamemANAGER.instance.tetrominoFallingSpeed * Time.deltaTime;
+            transform.position = transform.position + Vector3.down * GameManager.instance.tetrominoFallingSpeed * Time.deltaTime;
 
             CheckCollision();
         }
@@ -41,14 +41,24 @@ public class Tetris : MonoBehaviour
         {
             falling = false;
             ResetTetrominoPositionToMatchGrid();
-        }
 
-        //check if any block is out of bounds above camera
-        foreach (GameObject block in blocksList)
-        {
-            float camHeightInWorld = Camera.main.ViewportToWorldPoint(Vector2.one).y;
-            if (block.transform.position.y > camHeightInWorld) GamemANAGER.instance.gameInPlay = false;
+            //check for Tetris
+            List<int> yCoords = new List<int>();
+            foreach (GameObject block in blocksList)
+            {
+                if (!yCoords.Contains((int)block.transform.position.y)) yCoords.Add((int)block.transform.position.y);
+            }
+            GridManager.instance.CheckForTetris(yCoords);
+
+
+            //check if any block is out of bounds above camera
+            foreach (GameObject block in blocksList)
+            {
+                float camHeightInWorld = Camera.main.ViewportToWorldPoint(Vector2.one).y;
+                if (block.transform.position.y > camHeightInWorld) GameManager.instance.gameInPlay = false;
+            }
         }
+        
     }
     private void CheckCollision()
     {
@@ -63,7 +73,7 @@ public class Tetris : MonoBehaviour
             {
                 foreach(RaycastHit2D hit in hits)
                 {
-                    if(hit.collider.gameObject != gameObject)
+                    if(!blocksList.Contains(hit.collider.gameObject))
                     {
                         LandedOnTetromino();
                     }

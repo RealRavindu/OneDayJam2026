@@ -8,7 +8,7 @@ public class TetrisController : MonoBehaviour
 
     private void Update()
     {
-        if (GamemANAGER.instance.activeTetris != null)
+        if (GameManager.instance.activeTetris != null)
         {
             if (Input.GetKeyDown(rotateClockwise) || Input.GetKeyDown(rotateClockwiseAlt)) RotateClockwise();
             if (Input.GetKeyDown(rotateCounterClockwise) || Input.GetKeyDown(rotateCounterClockwiseAlt)) RotateCounterClockwise();
@@ -23,33 +23,33 @@ public class TetrisController : MonoBehaviour
     public void RotateClockwise()
     {
 
-        GamemANAGER.instance.activeTetris.transform.Rotate(new Vector3(0, 0, 90));
+        GameManager.instance.activeTetris.transform.Rotate(new Vector3(0, 0, 90));
 
     }
     public void RotateCounterClockwise()
     {
 
-        GamemANAGER.instance.activeTetris.transform.Rotate(new Vector3(0, 0, -90));
+        GameManager.instance.activeTetris.transform.Rotate(new Vector3(0, 0, -90));
 
     }
     public void MoveLeft()
     {
 
-        GamemANAGER.instance.activeTetris.transform.position += Vector3.left;
+        GameManager.instance.activeTetris.transform.position += Vector3.left;
 
     }
     public void MoveRight()
     {
 
-        GamemANAGER.instance.activeTetris.transform.position += Vector3.right;
+        GameManager.instance.activeTetris.transform.position += Vector3.right;
 
     }
     public void Boost()
     {
-        GamemANAGER.instance.tetrominoFallingSpeed += boostValue;
+        GameManager.instance.tetrominoFallingSpeed += boostValue;
     }
     public void RemoveBoost()
     {
-        GamemANAGER.instance.tetrominoFallingSpeed -= boostValue;
+        GameManager.instance.tetrominoFallingSpeed -= boostValue;
     }
 }

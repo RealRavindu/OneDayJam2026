@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GamemANAGER : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static GamemANAGER instance;
+    public static GameManager instance;
 
     [Header("Gameplay variables")]
     public bool gameInPlay
