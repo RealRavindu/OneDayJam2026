@@ -39,9 +39,8 @@ public class TetrisController : MonoBehaviour
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
         foreach (Block block in tetris.blocksList)
         {
+            //HITS IS ONLY GETTING THE FIRST COLLISION DETECTED ADDED TO IT, WHICH IS ITSELF (BELOW), NEED TO FIX THIS
             hits.Add(Physics2D.Raycast(block.transform.position, Vector2.left, block.transform.localScale.x, tetris.LM_Tetromino));
-            Debug.DrawLine(block.transform.position, block.transform.position + Vector3.left*block.transform.localScale.x, Color.red, 5);
-            //Debug.Log($"checking left at position {(Vector2)block.transform.position + Vector2.left * block.transform.localScale.x}");
         }
         Debug.Log($"hits while checking left {hits.Count}");
         foreach (RaycastHit2D hit in hits)
