@@ -13,26 +13,27 @@ public class Tetris : MonoBehaviour
             _falling = value;
             if (!value) //if not falling
             {
+                foreach (Block block in blocksList) block.falling = false;
                 Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}");
-                GameManager.instance.activeTetris = null;
+                if(GameManager.instance.activeTetris == this) GameManager.instance.activeTetris = null;
+
             }
         }
     }
     private bool _falling = false;
-    public List<GameObject> blocksList = new List<GameObject>();
-    public LayerMask tetrominoLayerMask;
+    public List<Block> blocksList;
+    public LayerMask LM_Tetromino;
     private void FixedUpdate()
     {
         if (falling)
         {
-            transform.position = transform.position + Vector3.down * GameManager.instance.tetrominoFallingSpeed * Time.deltaTime;
-
             CheckCollision();
         }
     }
     public void EnableFalling()
     {
         falling = true;
+        foreach (Block block in blocksList) { block.falling = true; }
     }
 
     public void LandedOnTetromino()
@@ -44,15 +45,24 @@ public class Tetris : MonoBehaviour
 
             //check for Tetris
             List<int> yCoords = new List<int>();
-            foreach (GameObject block in blocksList)
+            foreach (Block block in blocksList)
             {
-                if (!yCoords.Contains((int)block.transform.position.y)) yCoords.Add((int)block.transform.position.y);
+                block.partOfTetromino = false;
+                int yCoord = (int)block.transform.position.y;
+
+                if (!yCoords.Contains(yCoord))
+                { 
+                    yCoords.Add(yCoord);
+                }
+                
+                GridManager.instance.AddBlockToDictionary(yCoord, block);
             }
+            yCoords.Sort(); //lowest value number goes first
             GridManager.instance.CheckForTetris(yCoords);
 
 
             //check if any block is out of bounds above camera
-            foreach (GameObject block in blocksList)
+            foreach (Block block in blocksList)
             {
                 float camHeightInWorld = Camera.main.ViewportToWorldPoint(Vector2.one).y;
                 if (block.transform.position.y > camHeightInWorld) GameManager.instance.gameInPlay = false;
@@ -62,18 +72,18 @@ public class Tetris : MonoBehaviour
     }
     private void CheckCollision()
     {
-        foreach (GameObject block in blocksList)
+        foreach (Block block in blocksList)
         {
             //raycast down(globally)
             Vector3 blockPos = block.transform.position;
             RaycastHit2D[] hits;
-            hits = Physics2D.RaycastAll(blockPos, Vector2.down, block.transform.localScale.x/2, tetrominoLayerMask); //only checking tetris collisions
+            hits = Physics2D.RaycastAll(blockPos, Vector2.down, block.transform.localScale.x/2, LM_Tetromino); //only checking tetris collisions
             Debug.DrawLine(blockPos, blockPos + (Vector3)Vector2.down * block.transform.localScale.x/2);
             if(hits.Length>0)
             {
                 foreach(RaycastHit2D hit in hits)
                 {
-                    if(!blocksList.Contains(hit.collider.gameObject))
+                    if(!blocksList.Contains(hit.collider.GetComponent<Block>()))
                     {
                         LandedOnTetromino();
                     }
@@ -85,12 +95,13 @@ public class Tetris : MonoBehaviour
     }
 
     
-    private void ResetTetrominoPositionToMatchGrid()
+    public void ResetTetrominoPositionToMatchGrid()
     {
-        foreach(GameObject block in blocksList)
+        /*foreach(Block block in blocksList)
         {
             Vector3 blockPos = block.transform.position;
             block.transform.position = new Vector3(Mathf.Round(blockPos.x), Mathf.Round(blockPos.y), Mathf.Round(blockPos.z));
-        }
+        }*/
+        transform.position = GameManager._tileMap.WorldToCell(transform.position);
     }
 }

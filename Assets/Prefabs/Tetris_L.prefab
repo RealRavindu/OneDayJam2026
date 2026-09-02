@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2802651018920208628}
   - component: {fileID: 5223825473120584827}
   - component: {fileID: 690888638766338508}
+  - component: {fileID: 5451190948109600492}
   m_Layer: 6
   m_Name: Square (1)
   m_TagString: Tetromino
@@ -166,6 +167,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5451190948109600492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272001492497665951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2368857797680291371
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +196,7 @@ GameObject:
   - component: {fileID: 7760859868668117813}
   - component: {fileID: 7802361994636349834}
   - component: {fileID: 2961696085222474589}
+  - component: {fileID: 2104351860170710834}
   m_Layer: 6
   m_Name: Square (3)
   m_TagString: Tetromino
@@ -332,6 +351,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2104351860170710834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368857797680291371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &3870484158944232713
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +380,7 @@ GameObject:
   - component: {fileID: 7790164291759711265}
   - component: {fileID: 8475093588035429731}
   - component: {fileID: 8806315817989274555}
+  - component: {fileID: 3386746190016513369}
   m_Layer: 6
   m_Name: Square
   m_TagString: Tetromino
@@ -498,6 +535,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3386746190016513369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870484158944232713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7657339435635629917
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,11 +601,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tetris
   blocksList:
-  - {fileID: 3870484158944232713}
-  - {fileID: 272001492497665951}
-  - {fileID: 8884647861959420989}
-  - {fileID: 2368857797680291371}
-  tetrominoLayerMask:
+  - {fileID: 3386746190016513369}
+  - {fileID: 5451190948109600492}
+  - {fileID: 1069117677026899218}
+  - {fileID: 2104351860170710834}
+  LM_Tetromino:
     serializedVersion: 2
     m_Bits: 64
 --- !u!1 &8884647861959420989
@@ -566,6 +620,7 @@ GameObject:
   - component: {fileID: 3132248486984392112}
   - component: {fileID: 2620065152280272714}
   - component: {fileID: 3231968670006093477}
+  - component: {fileID: 1069117677026899218}
   m_Layer: 6
   m_Name: Square (2)
   m_TagString: Tetromino
@@ -720,3 +775,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1069117677026899218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884647861959420989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0

@@ -22,27 +22,27 @@ public class TetrisController : MonoBehaviour
 
     public void RotateClockwise()
     {
-
-        GameManager.instance.activeTetris.transform.Rotate(new Vector3(0, 0, 90));
-
+        Vector3 center = GameManager.instance.activeTetris.blocksList[1].transform.position;
+        GameManager.instance.activeTetris.transform.RotateAround(center, Vector3.forward, 90);
+        //GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
     }
     public void RotateCounterClockwise()
     {
 
         GameManager.instance.activeTetris.transform.Rotate(new Vector3(0, 0, -90));
-
+        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
     }
     public void MoveLeft()
     {
 
         GameManager.instance.activeTetris.transform.position += Vector3.left;
-
+        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
     }
     public void MoveRight()
     {
 
         GameManager.instance.activeTetris.transform.position += Vector3.right;
-
+        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
     }
     public void Boost()
     {
