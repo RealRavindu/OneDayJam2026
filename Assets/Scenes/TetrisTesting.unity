@@ -1162,6 +1162,7 @@ MonoBehaviour:
   LM_Tetromino:
     serializedVersion: 2
     m_Bits: 64
+  Combo: 0
 --- !u!1 &1408994106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,7 +1265,7 @@ MonoBehaviour:
   tetrominoFallingSpeed: 3.67
   tetrominosToSpawn: []
   tetrominoSpawnOffset: 0
-  cameraMoveSpeed: 0.15
+  cameraMoveSpeed: 0
   tile: {fileID: 11400000, guid: 4d89099a63a5aa142b2ccc4de89a5c8f, type: 2}
   firstScale: 0.75
   secondScale: 0.5

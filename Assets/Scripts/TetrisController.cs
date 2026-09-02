@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class TetrisController : MonoBehaviour
 {
     public KeyCode rotateClockwise, rotateCounterClockwise, moveLeft, moveRight, boost;
@@ -24,7 +24,7 @@ public class TetrisController : MonoBehaviour
     {
         Vector3 center = GameManager.instance.activeTetris.blocksList[1].transform.position;
         GameManager.instance.activeTetris.transform.RotateAround(center, Vector3.forward, 90);
-        //GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
+        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
     }
     public void RotateCounterClockwise()
     {
@@ -34,15 +34,49 @@ public class TetrisController : MonoBehaviour
     }
     public void MoveLeft()
     {
-
-        GameManager.instance.activeTetris.transform.position += Vector3.left;
-        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
+        Tetris tetris = GameManager.instance.activeTetris;
+        bool canMove = true;
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        foreach (Block block in tetris.blocksList)
+        {
+            hits.Add(Physics2D.Raycast(block.transform.position, Vector2.left, block.transform.localScale.x, tetris.LM_Tetromino));
+            Debug.DrawLine(block.transform.position, block.transform.position + Vector3.left*block.transform.localScale.x, Color.red, 5);
+            //Debug.Log($"checking left at position {(Vector2)block.transform.position + Vector2.left * block.transform.localScale.x}");
+        }
+        Debug.Log($"hits while checking left {hits.Count}");
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>())) 
+            {
+                Debug.Log("can move set to false, alien piece detected");
+                canMove = false;
+            }
+        }
+        if (canMove)
+        {
+            tetris.transform.position += Vector3.left;
+        }
+        
     }
     public void MoveRight()
     {
-
-        GameManager.instance.activeTetris.transform.position += Vector3.right;
-        GameManager.instance.activeTetris.ResetTetrominoPositionToMatchGrid();
+        Tetris tetris = GameManager.instance.activeTetris;
+        bool canMove = false;
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        foreach (Block block in tetris.blocksList)
+        {
+            hits.Add(Physics2D.Raycast(block.transform.position, Vector2.right, block.transform.localScale.x, tetris.LM_Tetromino));
+            
+        }
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>())) break;
+            canMove = true;
+        }
+        if (canMove)
+        {
+            tetris.transform.position += Vector3.right;
+        }
     }
     public void Boost()
     {

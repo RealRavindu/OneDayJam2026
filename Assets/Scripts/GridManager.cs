@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour
 
             } else
             {
-                Debug.Log($"no tetris at {y}, no of blocks = {placedBlocksList[y].Count}");
+                //Debug.Log($"no tetris at {y}, no of blocks = {placedBlocksList[y].Count}");
 
             }
 
