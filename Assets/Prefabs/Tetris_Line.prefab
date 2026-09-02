@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 7944301652894142596}
   - component: {fileID: 4297329192190192367}
   - component: {fileID: 6873868026643140629}
-  m_Layer: 0
+  - component: {fileID: 8189358924588909159}
+  - component: {fileID: 7502995237141803695}
+  m_Layer: 6
   m_Name: Square
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -138,6 +140,50 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &8189358924588909159
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288474026426664199}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &7502995237141803695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288474026426664199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &3029274439955434609
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +195,9 @@ GameObject:
   - component: {fileID: 5818126664069692186}
   - component: {fileID: 8449691443299666436}
   - component: {fileID: 5335711361212178822}
-  m_Layer: 0
+  - component: {fileID: 8576109547518553981}
+  - component: {fileID: 8295435375487564515}
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -276,6 +324,50 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &8576109547518553981
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3029274439955434609}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &8295435375487564515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3029274439955434609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8187564701107005972
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,8 +378,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1366734839814048812}
   - component: {fileID: 4670741294397275967}
-  - component: {fileID: 298051215341512030}
-  - component: {fileID: 426879241917304475}
   m_Layer: 6
   m_Name: Tetris_Line
   m_TagString: Tetromino
@@ -326,131 +416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5973495fb15894480a300e6ddbeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tetris
-  falling: 0
   blocksList:
-  - {fileID: 288474026426664199}
-  - {fileID: 3029274439955434609}
-  - {fileID: 8831841584814501020}
-  - {fileID: 8241571517466349229}
-  tetrominoLayerMask:
+  - {fileID: 7502995237141803695}
+  - {fileID: 8295435375487564515}
+  - {fileID: 5358830022664732141}
+  - {fileID: 7044541426528805347}
+  LM_Tetromino:
     serializedVersion: 2
     m_Bits: 64
---- !u!50 &298051215341512030
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8187564701107005972}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!66 &426879241917304475
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8187564701107005972}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 1
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 6873868026643140629}
-    m_ColliderPaths:
-    - - X: 5000000
-        Y: 5000000
-      - X: -5000000
-        Y: 5000000
-      - X: -5000000
-        Y: -5000000
-      - X: 5000000
-        Y: -5000000
-  - m_Collider: {fileID: 5335711361212178822}
-    m_ColliderPaths:
-    - - X: 5000000
-        Y: 15000000
-      - X: -5000000
-        Y: 15000000
-      - X: -5000000
-        Y: 5000000
-      - X: 5000000
-        Y: 5000000
-  - m_Collider: {fileID: 6105720845299672325}
-    m_ColliderPaths:
-    - - X: 5000000
-        Y: 25000000
-      - X: -5000000
-        Y: 25000000
-      - X: -5000000
-        Y: 14999999
-      - X: 5000000
-        Y: 14999999
-  - m_Collider: {fileID: 4064465129924073418}
-    m_ColliderPaths:
-    - - X: 5000000
-        Y: 35000000
-      - X: -5000000
-        Y: 35000000
-      - X: -5000000
-        Y: 25000000
-      - X: 5000000
-        Y: 25000000
-  m_CompositePaths:
-    m_Paths:
-    - - {x: 0.4999707, y: -0.5}
-      - {x: 0.4999707, y: 3.5}
-      - {x: -0.5, y: 3.499971}
-      - {x: -0.4999707, y: -0.5}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 8187564701107005972}
 --- !u!1 &8241571517466349229
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +435,9 @@ GameObject:
   - component: {fileID: 3042541836133429025}
   - component: {fileID: 81141648922499337}
   - component: {fileID: 4064465129924073418}
-  m_Layer: 0
+  - component: {fileID: 1046500300820724432}
+  - component: {fileID: 7044541426528805347}
+  m_Layer: 6
   m_Name: Square (3)
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -589,6 +564,50 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &1046500300820724432
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241571517466349229}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &7044541426528805347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241571517466349229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8831841584814501020
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +619,9 @@ GameObject:
   - component: {fileID: 9172076211131289993}
   - component: {fileID: 1414152828977859237}
   - component: {fileID: 6105720845299672325}
-  m_Layer: 0
+  - component: {fileID: 4349870583876729577}
+  - component: {fileID: 5358830022664732141}
+  m_Layer: 6
   m_Name: Square (2)
   m_TagString: Tetromino
   m_Icon: {fileID: 0}
@@ -727,3 +748,47 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &4349870583876729577
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831841584814501020}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &5358830022664732141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831841584814501020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Block
+  falling: 0
+  partOfTetromino: 1
+  LM_Tetromino:
+    serializedVersion: 2
+    m_Bits: 0

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GamemANAGER : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static GamemANAGER instance;
+    public static GameManager instance;
 
     [Header("Gameplay variables")]
     public bool gameInPlay
@@ -46,7 +46,7 @@ public class GamemANAGER : MonoBehaviour
     public List<Tetris> tetrominosToSpawn = new List<Tetris>();
     [SerializeField] private int tetrominoSpawnOffset;
     public float cameraMoveSpeed;
-    private Tilemap _tileMap;
+    public static Tilemap _tileMap;
     [SerializeField] private TileBase tile;
     [Header("Queue values")]
     [SerializeField] float firstScale; [SerializeField] float secondScale, thirdScale;
@@ -79,13 +79,10 @@ public class GamemANAGER : MonoBehaviour
         if (gameInPlay) MoveCameraUp();
 
 
-        Debug.Log($"////// frame //////// tetrominos to spawn count: {tetrominosToSpawn.Count} ");
     }
 
     public void SelectThreeTetrominoToAddToQueue()
     {
-        Debug.Log("Selecting three pieces to spawn");
-
         for (int i = 0; i < 3; i++)
         {
             tetrominosToSpawn.Add(GenerateRandomTetromino());
@@ -94,7 +91,6 @@ public class GamemANAGER : MonoBehaviour
     }
     public void DisplayTetrisQueue()
     {
-        Debug.Log("Displaying Queue");
 
         tetrominosToSpawn[0].transform.position = firstPos.position;
         tetrominosToSpawn[0].transform.localScale = Vector2.one *firstScale;
@@ -110,7 +106,6 @@ public class GamemANAGER : MonoBehaviour
     }
     public Tetris GenerateRandomTetromino()
     {
-        Debug.Log("Generating random tetris piece");
 
         int randomNum = Random.Range(0, tetrominoPrefabsList.Count);
         GameObject spawnedTetromino = Instantiate(tetrominoPrefabsList[randomNum], TetriiGroup.transform);
@@ -118,10 +113,9 @@ public class GamemANAGER : MonoBehaviour
     }
     public void SpawnTetrominoAtTop(Tetris tetromino)
     {
-        Debug.Log("Spawning given piece at top of screen");
 
         Vector3Int spawnPosition = new Vector3Int(-1, (int)Camera.main.ViewportToWorldPoint(Vector2.one).y + tetrominoSpawnOffset);
-        tetromino.transform.parent = TetriiGroup.transform;
+        tetromino.transform.parent = null;
         tetromino.transform.position = spawnPosition;
         tetromino.transform.localScale = Vector2.one;
         activeTetris = tetromino;
@@ -129,7 +123,6 @@ public class GamemANAGER : MonoBehaviour
 
         if (tetrominosToSpawn.Contains(activeTetris))
         {
-            Debug.Log($"Removing active tetris from tetrominos to spawn");
             tetrominosToSpawn.Remove(activeTetris);
         }
         
