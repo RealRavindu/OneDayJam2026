@@ -307,7 +307,7 @@ public class JoeController : MonoBehaviour
 
     public bool GroundCheck()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(rb.position, Vector2.one, 0f, Vector2.down, 0.05f, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(rb.position, new Vector2(0.8f,1f), 0f, Vector2.down, 0.05f, groundLayer);
 
         if (hit)
         {
@@ -321,12 +321,22 @@ public class JoeController : MonoBehaviour
         }
     }
 
+    private void TakeDamage(int amount)
+    {
+
+    }
+
+    private void ApplyKnockback()
+    {
+        rb.linearVelocityY = jumpSpeed;
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 11)
         {
             Debug.Log("OUCH!");
             health--;
+            ApplyKnockback();
 
             if (health == 0)
             {

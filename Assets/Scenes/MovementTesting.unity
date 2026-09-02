@@ -269,6 +269,10 @@ PrefabInstance:
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 23971342655868013, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
+      propertyPath: maxHealth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 23971342655868013, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
       propertyPath: pushOffMult
       value: 1
       objectReference: {fileID: 0}
