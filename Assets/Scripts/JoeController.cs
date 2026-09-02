@@ -268,7 +268,7 @@ public class JoeController : MonoBehaviour
     private void UseWallJump()
     {
         rb.linearVelocityY = jumpSpeed;
-        rb.linearVelocityX = hMaxSpeed * pushOffMult;
+        rb.linearVelocityX = hMaxSpeed * pushOffMult * -wallDirection;
         hasWJCharge = false;
     }
 
