@@ -56,6 +56,12 @@ public class JoeController : MonoBehaviour
     private float spidermanTime;
     public float spidermanBufferTime;
 
+    [Header("Damage Variables")]
+    public float hazardBounceStrength;
+    public float invulnDuraction;
+    public bool isInvuln;
+    private float invulnTime;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -129,7 +135,15 @@ public class JoeController : MonoBehaviour
             }
         }
 
+        if (isInvuln)
+        {
+            invulnTime += Time.deltaTime;
 
+            if (invulnTime > invulnDuraction)
+            {
+                isInvuln = false;
+            }
+        }
 
 
 
@@ -326,17 +340,38 @@ public class JoeController : MonoBehaviour
 
     }
 
-    private void ApplyKnockback()
+    private void ApplyKnockback(Vector2 hazardPos)
     {
-        rb.linearVelocityY = jumpSpeed;
+        Vector2 impactDirection = (rb.position - hazardPos).normalized;
+
+        rb.linearVelocity = impactDirection * hazardBounceStrength;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 11)
+        if (collision.gameObject.layer == 11 && !isInvuln)
         {
             Debug.Log("OUCH!");
             health--;
-            ApplyKnockback();
+            ApplyKnockback(collision.gameObject.transform.position);
+            isInvuln = true;
+            invulnTime = 0f;
+
+            if (health == 0)
+            {
+                Debug.Log("Ya ded");
+            }
+        }
+    }
+
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 11 && !isInvuln)
+        {
+            Debug.Log("OUCH!");
+            health--;
+            ApplyKnockback(collision.gameObject.transform.position);
+            isInvuln = true;
+            invulnTime = 0f;
 
             if (health == 0)
             {
