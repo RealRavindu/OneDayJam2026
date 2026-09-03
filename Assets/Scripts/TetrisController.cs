@@ -36,19 +36,18 @@ public class TetrisController : MonoBehaviour
     {
         Tetris tetris = GameManager.instance.activeTetris;
         bool canMove = true;
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
         foreach (Block block in tetris.blocksList)
         {
-            //HITS IS ONLY GETTING THE FIRST COLLISION DETECTED ADDED TO IT, WHICH IS ITSELF (BELOW), NEED TO FIX THIS
-            hits.Add(Physics2D.Raycast(block.transform.position, Vector2.left, block.transform.localScale.x, tetris.LM_Tetromino));
-        }
-        Debug.Log($"hits while checking left {hits.Count}");
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>())) 
+            RaycastHit2D[] hitsForThisBlockBottom = Physics2D.RaycastAll(block.transform.position + Vector3.down * block.transform.localScale.x / 2, Vector2.left, block.transform.localScale.x, tetris.LM_Tetromino);
+            RaycastHit2D[] hitsForThisBlockTop = Physics2D.RaycastAll(block.transform.position + Vector3.up * block.transform.localScale.x / 2, Vector2.left, block.transform.localScale.x, tetris.LM_Tetromino);
+            List<RaycastHit2D> hitsForThisBlock = new List<RaycastHit2D>();
+            hitsForThisBlock.AddRange(hitsForThisBlockTop);
+            hitsForThisBlock.AddRange(hitsForThisBlockBottom); foreach (RaycastHit2D hit in hitsForThisBlock)
             {
-                Debug.Log("can move set to false, alien piece detected");
-                canMove = false;
+                if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>()))
+                {
+                    canMove = false; break;
+                }
             }
         }
         if (canMove)
@@ -60,22 +59,27 @@ public class TetrisController : MonoBehaviour
     public void MoveRight()
     {
         Tetris tetris = GameManager.instance.activeTetris;
-        bool canMove = false;
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        bool canMove = true;
         foreach (Block block in tetris.blocksList)
         {
-            hits.Add(Physics2D.Raycast(block.transform.position, Vector2.right, block.transform.localScale.x, tetris.LM_Tetromino));
-            
-        }
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>())) break;
-            canMove = true;
+            RaycastHit2D[] hitsForThisBlockBottom = Physics2D.RaycastAll(block.transform.position + Vector3.down * block.transform.localScale.x / 2, Vector2.right, block.transform.localScale.x, tetris.LM_Tetromino);
+            RaycastHit2D[] hitsForThisBlockTop = Physics2D.RaycastAll(block.transform.position + Vector3.up * block.transform.localScale.x / 2, Vector2.right, block.transform.localScale.x, tetris.LM_Tetromino);
+            List<RaycastHit2D> hitsForThisBlock = new List<RaycastHit2D>();
+            hitsForThisBlock.AddRange(hitsForThisBlockTop);
+            hitsForThisBlock.AddRange(hitsForThisBlockBottom);
+            foreach (RaycastHit2D hit in hitsForThisBlock)
+            {
+                if (!tetris.blocksList.Contains(hit.collider.GetComponent<Block>()))
+                {
+                    canMove = false; break;
+                }
+            }
         }
         if (canMove)
         {
             tetris.transform.position += Vector3.right;
         }
+
     }
     public void Boost()
     {

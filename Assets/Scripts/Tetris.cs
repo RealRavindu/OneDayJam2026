@@ -100,7 +100,7 @@ public class Tetris : MonoBehaviour
         foreach(Block block in blocksList)
         {
             Vector3 blockPos = block.transform.position;
-            block.transform.position = new Vector3(Mathf.Round(blockPos.x), blockPos.y, Mathf.Round(blockPos.z));
+            block.transform.position = new Vector3(Mathf.Round(blockPos.x), Mathf.Round(blockPos.y), Mathf.Round(blockPos.z));
         }
     }
 }
