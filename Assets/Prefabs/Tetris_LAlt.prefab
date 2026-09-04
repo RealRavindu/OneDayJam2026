@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Block
+  position: {x: 1, y: 0}
   falling: 0
   partOfTetromino: 1
   LM_Tetromino:
@@ -420,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Block
+  position: {x: 0, y: 0}
   falling: 0
   partOfTetromino: 1
   LM_Tetromino:
@@ -604,6 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Block
+  position: {x: -1, y: 1}
   falling: 0
   partOfTetromino: 1
   LM_Tetromino:
@@ -788,6 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830fe57d4e6fb7f4396989a2beb361ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Block
+  position: {x: -1, y: 0}
   falling: 0
   partOfTetromino: 1
   LM_Tetromino:

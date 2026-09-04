@@ -7,6 +7,16 @@ using Unity.VisualScripting;
 public class Tetris : MonoBehaviour
 {
     public TetrisShape shape;
+    public int rotationIndex
+    {
+        get { return _rotationIndex; }
+        set
+        {
+            _rotationIndex = value;
+            if (_rotationIndex > 3) _rotationIndex = 0;
+        }
+    }
+    private int _rotationIndex;
     public bool falling 
     {
         get { return _falling; }
@@ -15,7 +25,7 @@ public class Tetris : MonoBehaviour
             if (!value) //if not falling
             {
                 foreach (Block block in blocksList) block.falling = false;
-                Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}");
+                Debug.Log($"I am a tetris piece and I have collided, my name is {gameObject.name}-elius tetrilius.");
                 if(GameManager.instance.activeTetris == this) GameManager.instance.activeTetris = null;
 
             }

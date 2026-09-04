@@ -3,6 +3,8 @@ using static Unity.Collections.AllocatorManager;
 
 public class Block : MonoBehaviour
 {
+    public Vector2 position;
+    
     public bool falling;
     public bool partOfTetromino = true;
     public LayerMask LM_Tetromino;

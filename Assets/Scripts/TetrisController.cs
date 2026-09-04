@@ -27,7 +27,7 @@ public class TetrisController : MonoBehaviour
     {
         bool canMove = true;
         Tetris tetris = GameManager.instance.activeTetris;
-
+        
         //get center of all blocks
         Vector3 center = Vector3.zero;
         foreach(Block block in tetris.blocksList)
@@ -72,6 +72,7 @@ public class TetrisController : MonoBehaviour
                 //this will only run if an obstruction was NOT detected during the current offset
                 tetris.transform.RotateAround(center, Vector3.forward, -90);
                 tetris.transform.position += offset;
+                tetris.rotationIndex++;
                 tetris.ResetTetrominoPositionToMatchGrid();
                 break;
             }
