@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 
 public class Tetris : MonoBehaviour
 {
+    public TetrisShape shape;
     public bool falling 
     {
         get { return _falling; }
@@ -100,7 +101,12 @@ public class Tetris : MonoBehaviour
         foreach(Block block in blocksList)
         {
             Vector3 blockPos = block.transform.position;
-            block.transform.position = new Vector3(Mathf.Round(blockPos.x), Mathf.Round(blockPos.y), Mathf.Round(blockPos.z));
+            block.transform.position = new Vector3(Mathf.Round(blockPos.x), blockPos.y, Mathf.Round(blockPos.z));
         }
     }
+}
+
+public enum TetrisShape
+{
+    I, O, J, L, T, Z, S
 }

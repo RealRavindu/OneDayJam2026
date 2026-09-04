@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     }
     private bool _gameInPlay = false;
     public int score;
-    public float tetrominoFallingSpeed;
+    public float tetrominoFallingSpeed, camFloatStartDelay;
     public Tetris activeTetris
     {
         get { return _activeTetris; }
@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
     private Tetris _activeTetris;
     public List<Tetris> tetrominosToSpawn = new List<Tetris>();
     [SerializeField] private int tetrominoSpawnOffset;
-    public float cameraMoveSpeed;
+    public AnimationCurve cameraMoveSpeedCurve;
+    public float cameraMaxSpeedReachTime, cameraMaxSpeed;
     public static Tilemap _tileMap;
     [SerializeField] private TileBase tile;
     [Header("Queue values")]
@@ -76,7 +77,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameInPlay) MoveCameraUp();
+        currentTime += Time.deltaTime;
+        if (gameInPlay && currentTime>camFloatStartDelay) MoveCameraUp();
 
 
     }
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     public void MoveCameraUp()
     {
-        Camera.main.transform.position += Vector3.up * cameraMoveSpeed * Time.deltaTime;
+        Camera.main.transform.position += Vector3.up * cameraMaxSpeed * cameraMoveSpeedCurve.Evaluate(currentTime/cameraMaxSpeedReachTime) * Time.deltaTime;
 
         //adding tiles above camera
         Vector3 topLeftCorner = new Vector3(-4.5f, Camera.main.ViewportToWorldPoint(Vector2.one).y + 1);

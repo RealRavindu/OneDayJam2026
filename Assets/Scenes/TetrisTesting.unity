@@ -700,6 +700,18 @@ MonoBehaviour:
   moveRightAlt: 275
   boostAlt: 274
   boostValue: 5
+  I_SRSPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: -2, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
+  - {x: -2, y: -1, z: 0}
+  - {x: 1, y: 2, z: 0}
+  Other_SRSPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: -1, y: 1, z: 0}
+  - {x: 0, y: -2, z: 0}
+  - {x: -2, y: -2, z: 0}
 --- !u!4 &516311145
 Transform:
   m_ObjectHideFlags: 0
@@ -1595,9 +1607,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GamemANAGER
   score: 0
   tetrominoFallingSpeed: 3.67
+  camFloatStartDelay: 7.3715
   tetrominosToSpawn: []
-  tetrominoSpawnOffset: 0
-  cameraMoveSpeed: 0
+  tetrominoSpawnOffset: 2
+  cameraMoveSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cameraMaxSpeedReachTime: 20
+  cameraMaxSpeed: 0.8
   tile: {fileID: 11400000, guid: 4d89099a63a5aa142b2ccc4de89a5c8f, type: 2}
   firstScale: 0.75
   secondScale: 0.5
