@@ -34,6 +34,10 @@ public class Tetris : MonoBehaviour
     private bool _falling = false;
     public List<Block> blocksList;
     public LayerMask LM_Tetromino;
+    private void Start()
+    {
+        rotationIndex = 3;
+    }
     private void FixedUpdate()
     {
         if (falling)

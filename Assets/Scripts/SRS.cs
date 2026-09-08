@@ -3,31 +3,36 @@ using System;
 using System.Collections.Generic;
 
 public class SRS : MonoBehaviour
-{ 
+{
+    public static SRS instance;
     public TextAsset TextAsset;
-    public Dictionary<int, Vector2Int> testSequences = new Dictionary<int, Vector2Int>();
+    public Dictionary<int, List<Vector2Int>> O_TestSequences = new Dictionary<int, List<Vector2Int>>();
+    public Dictionary<int, List<Vector2Int>> I_TestSequences = new Dictionary<int, List<Vector2Int>>();
 
     //Differentiate between I and O
     //Differentiate between the 4 states
     private void Start()
     {
-        ReadCSVFile();
+        instance = this;
+        O_TestSequences = ReadCSVFile(0);
+        I_TestSequences = ReadCSVFile(1);
     }
-    public void ReadCSVFile()
+    public Dictionary<int, List<Vector2Int>> ReadCSVFile(int startNum)
     {
-
-        string[] data = TextAsset.text.Split(',');
-        for(int i =0; i< data.Length; i+=9)
+        Dictionary<int, List<Vector2Int>> testSequences = new Dictionary<int, List<Vector2Int>>();
+        string[] data = TextAsset.text.Split(',','\n');
+        for(int i =0 ; i< 4; i++)
         {
-            Debug.Log($"i: {i} | i in data: {int.Parse(data[i])}");
-            testSequences.Add(int.Parse(data[i]), Vector2Int.zero);
-            for(int j=i+1; j< i+1+data.Length/2; j+=8)
+            testSequences.Add(i, new List<Vector2Int>());
+            
+            for(int j=i*2 +((data.Length / 2)*startNum); j< i+data.Length/2 +((data.Length / 2)*startNum); j+=8)
             {
-                testSequences[int.Parse(data[i])] = new Vector2Int(int.Parse(data[j]), int.Parse(data[j + 1]));
-                Debug.Log($"j vector: {new Vector2Int(int.Parse(data[j]), int.Parse(data[j + 1]))}");
+                testSequences[i].Add(new Vector2Int(int.Parse(data[j]), int.Parse(data[j + 1])));
             }
         }
-        Debug.Log($"final dictionary keys (i) size: {testSequences.Keys.Count} |final dictionary values (j) size: {testSequences.Values.Count}");
+        return testSequences;
     }
+
+    
 }
 
