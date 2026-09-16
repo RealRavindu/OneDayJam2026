@@ -16,7 +16,7 @@ public class BlockShadow : MonoBehaviour
         {
             //if (value.y == -Mathf.Infinity) Destroy(this);
             _position = (Vector3)TetrominoManager.tilemap.WorldToCell(value);
-            transform.position = parentBlock.tetromino.GetHighestPointOfContact() + _position;
+            transform.position = parentBlock.tetromino.GetHighestPointOfContact() + value;
         }
     }
     private Vector2 _position;

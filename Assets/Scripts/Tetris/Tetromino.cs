@@ -82,22 +82,39 @@ public class Tetromino : MonoBehaviour
 
     public Vector2 GetHighestPointOfContact()
     {
+        Debug.Log("\n");
         float highestY = -Mathf.Infinity;
-        int highestBlockNum = 0;
+        int lowestBlockNum = 0;
         for (int i = 0; i < 4; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(blocksList[i].transform.position + Vector3.down, Vector2.down, 40, LM_Tetromino);
+            float hitY = Mathf.Round(hit.point.y + 0.5f);
+            Debug.Log($"{blocksList[i].name} with position.y {blocksList[i].position.y} has detected {hit.collider.name} at point {hit.point.y} rounded up to {hitY}");
             if (!blocksList.Contains<Block>(hit.collider.GetComponent<Block>()))
             {
-                if (hit.point.y > highestY)
+                if (hitY >= highestY)
                 {
-                    highestY = hit.point.y;
-                    highestBlockNum = i;
+                    //FOR FUTURE DEBUGGING TRY TO USE DISTANCE INSTEAD OF HIGHEST Y TO RESOLVE
+                    Debug.Log("higher than or equal Y detected");
+                    highestY = hitY;
+                    lowestBlockNum = i;
+                    Debug.Log($"y of block being currently checked {blocksList[i].position.y} y of lowest block {blocksList[lowestBlockNum].position.y}");
+                    /*if (blocksList[i].position.y < blocksList[lowestBlockNum].position.y)
+                    {
+                        Debug.Log("block with lower position detected!");
+                        lowestBlockNum = i;
+                    }*/
                 }
             }
+
+            
         }
-        Transform blockTransform = blocksList[highestBlockNum].transform;
-        return new Vector2(transform.position.x, transform.position.y - blockTransform.position.y + highestY + (blockTransform.localScale.y / 2));
+        Debug.Log("Selected highest Y: " + highestY);
+        Debug.Log("Selected block: " + blocksList[lowestBlockNum].name);
+        Transform blockTransform = blocksList[lowestBlockNum].transform;
+        Debug.Log($"(transform.postion.y) {transform.position.y} - (block.position.y) {blockTransform.position.y}" +
+            $" + (highestY) {highestY} + (blocklocalScale/2) {blockTransform.localScale.y/2} = (final vector){new Vector2(transform.position.x, transform.position.y - blockTransform.position.y + highestY + (blockTransform.localScale.y / 2))}");
+        return new Vector2(transform.position.x, transform.position.y - blockTransform.position.y + highestY);
     }
 
 }

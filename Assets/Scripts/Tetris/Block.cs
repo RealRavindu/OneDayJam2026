@@ -12,8 +12,9 @@ public class Block : MonoBehaviour
         get { return _position; }
         set
         {
-            Vector3 offset = (tetromino.shape == TetrominoShape.I || tetromino.shape == TetrominoShape.O) ? new Vector3(-0.5f, -0.5f) : Vector3.zero;
-            transform.position = (Vector3)value + transform.parent.position + offset;
+            Vector2 offset = (tetromino.shape == TetrominoShape.I || tetromino.shape == TetrominoShape.O) ? new Vector2(-0.5f, -0.5f) : Vector2.zero;
+            value += offset;
+            transform.position = (Vector3)value + transform.parent.position;
             _position = value;
         }
     }
