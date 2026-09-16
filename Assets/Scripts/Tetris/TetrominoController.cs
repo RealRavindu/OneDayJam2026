@@ -16,11 +16,11 @@ public class TetrominoController : MonoBehaviour
     private void Update()
     {
         //Horizontal movement
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (Input.GetAxisRaw("TetrisHorizontal") != 0)
         {
-            MoveKeyPressed(Vector2.right * Input.GetAxisRaw("Horizontal"), horizontalAfterBufferTime);
+            MoveKeyPressed(Vector2.right * Input.GetAxisRaw("TetrisHorizontal"), horizontalAfterBufferTime);
         }
-        else if (Input.GetAxisRaw("Vertical") < 0)
+        else if (Input.GetAxisRaw("TetrisVertical") < 0)
         {
             MoveKeyPressed(Vector2.down, verticalAfterBufferTime);
         }

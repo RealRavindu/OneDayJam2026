@@ -1022,7 +1022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ActiveTetromino: {fileID: 0}
-  spawnPosition: {x: 0, y: 5}
+  spawnPosition: {x: 0, y: 10}
   GStepTime: 1.5
   boostValue: 0.3
 --- !u!4 &1309330256
