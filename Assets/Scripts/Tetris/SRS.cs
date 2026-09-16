@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 public class SRS : MonoBehaviour
 {
+    //This class reads a CSV file and stores test sequences that are used by the tetrominos to check if rotations are possible.
+    //SRS stands for Super Rotation System
+    //since I tetrominos and every other tetromino use 2 seperate sets of sequences they are divided into 2 dictionarys I(I line)_TestSequences and O(Other)_TestSequences
     public static SRS instance;
     public TextAsset TextAsset;
     public Dictionary<int, List<Vector2Int>> O_TestSequences = new Dictionary<int, List<Vector2Int>>();
     public Dictionary<int, List<Vector2Int>> I_TestSequences = new Dictionary<int, List<Vector2Int>>();
 
-    //Differentiate between I and O
-    //Differentiate between the 4 states
     private void Start()
     {
         instance = this;
