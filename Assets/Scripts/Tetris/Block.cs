@@ -12,9 +12,10 @@ public class Block : MonoBehaviour
         get { return _position; }
         set
         {
-            Vector2 offset = (tetromino.shape == TetrominoShape.I || tetromino.shape == TetrominoShape.O) ? new Vector2(-0.5f, -0.5f) : Vector2.zero;
-            value += offset;
-            transform.position = (Vector3)value + transform.parent.position;
+            //Vector2 offset = (tetromino.shape == TetrominoShape.I || tetromino.shape == TetrominoShape.O) ? new Vector2(0, 0.5f) : Vector2.zero;
+            //Debug.Log($"AAAAAAAAAAAA {offset} original value: {value} thingamabobbed value {value + offset}  value added to transform { (Vector3)value + transform.parent.position} transform at {tetromino.transform.position}");
+            
+            transform.position = value + (Vector2)transform.parent.position;
             _position = value;
         }
     }
@@ -27,13 +28,5 @@ public class Block : MonoBehaviour
         position = pos;
     }
 
-    public bool IsThereColliderAt(Vector2 targPosition)
-    {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(targPosition + (Vector2Int)TetrominoManager.tilemap.WorldToCell(position), transform.localScale / 2, 0, Vector2.down, 0, LM_Tetromino);
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (!tetromino.blocksList.Contains<Block>(hit.collider.GetComponent<Block>())) { return true; }
-        }
-        return false;
-    }
+    
 }

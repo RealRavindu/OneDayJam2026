@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class TetrominoController : MonoBehaviour
 {
     Tetromino activeTetromino => GameManager.instance.ActiveTetromino;
+    
     [SerializeField] KeyCode leftKey, rightKey, clockWiseKey, slamKey; //not currently used
     [SerializeField] float inputBuffer, horizontalAfterBufferTime, verticalAfterBufferTime;
     private bool hasAlreadyMoved = false;
@@ -29,25 +30,7 @@ public class TetrominoController : MonoBehaviour
         //Clockwise movement
         if (Input.GetKeyDown(clockWiseKey))
         {
-            Dictionary<int, List<Vector2Int>> testSequence = (activeTetromino.shape == TetrominoShape.I) ? SRS.instance.I_TestSequences : SRS.instance.O_TestSequences;
-            //get all positions to rotate tetromino to
-            Vector2[] positionsToRotateTo = new Vector2[4];
-            for (int i = 0; i < 4; i++)
-            {
-                Vector2 currentPos = activeTetromino.blocksList[i].position;
-                positionsToRotateTo[i] = new Vector2(currentPos.y, currentPos.x) * clockwiseRotationMatrix;
-            }
-            //try rotating tetromino to all offsets
-            foreach (Vector2 offset in testSequence[activeTetromino.rotationIndex])
-            {
-                if (activeTetromino.CanTetrominoRotateTo(positionsToRotateTo, offset))
-                {
-                    activeTetromino.RotateTetrominoTo(positionsToRotateTo, offset);
-                    break;
-                }
-
-            }
-
+            TryRotateTetromino(clockwiseRotationMatrix);
         }
 
         //Slam piece down
@@ -58,6 +41,7 @@ public class TetrominoController : MonoBehaviour
 
 
     }
+
 
     void MoveKeyPressed(Vector2 direction, float bufferTime)
     {
@@ -81,6 +65,29 @@ public class TetrominoController : MonoBehaviour
             }
 
             time -= bufferTime;
+        }
+    }
+
+    void TryRotateTetromino(Vector2 rotationMatrix)
+    {
+        //get all positions to rotate tetromino's blocks to
+        Vector2[] positionsToRotateTo = new Vector2[4];
+        for (int i = 0; i < 4; i++)
+        {
+            Vector2 currentPos = activeTetromino.blocksList[i].position;
+            positionsToRotateTo[i] = new Vector2(currentPos.y, currentPos.x) * rotationMatrix;
+        }
+
+        //try rotating tetromino to all offsets
+        foreach (Vector2 offset in activeTetromino.testSequence[activeTetromino.rotationIndex])
+        {
+            if (activeTetromino.CanTetrominoRotateTo(positionsToRotateTo, offset))
+            {
+                activeTetromino.RotateTetromino(rotationMatrix);
+                activeTetromino.MoveTetrominoTo(offset + (Vector2)activeTetromino.transform.position);
+                break;
+            }
+
         }
     }
 }

@@ -1,7 +1,8 @@
 using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.UIElements;
 //This class is an interface to move the Tetromino down
 //This class builds the tetromino based on the tetrominodata
 public class Tetromino : MonoBehaviour
@@ -17,12 +18,15 @@ public class Tetromino : MonoBehaviour
             _rotationIndex = value;
         }
     }
-    private int _rotationIndex;
+    private int _rotationIndex; //used by the Super Rotation System (SRS) to get the correct test sequence. The SRS script has a more detailed explanation.
     public Block[] blocksList = new Block[4];
     public LayerMask LM_Tetromino;
+    public Dictionary<int, List<Vector2Int>> testSequence;
     public void InstantiateTetromino(TetrominoData data)
     {
         shape = data.shape;
+        testSequence = (shape == TetrominoShape.I) ? SRS.instance.I_TestSequences : SRS.instance.O_TestSequences;
+
         for (int i = 0; i < 4; i++)
         {
             blocksList[i].InstantiateBlock(data.blockPositions[i], this);
@@ -40,7 +44,7 @@ public class Tetromino : MonoBehaviour
         bool canMove = true;
         foreach (Block block in blocksList)
         {
-            if (block.IsThereColliderAt(position))
+            if (IsThereColliderAtPosition(position + block.position))
             {
                 canMove = false;
                 break;
@@ -49,23 +53,22 @@ public class Tetromino : MonoBehaviour
 
         return canMove;
     }
-    public void RotateTetrominoTo(Vector2[] positionsList, Vector2 offset)
+    public void RotateTetromino(Vector2 rotationMatrix)
     {
         for (int i = 0; i < 4; i++)
         {
-            blocksList[i].position = positionsList[i];
-
+            Vector2 currentPos = blocksList[i].position;
+            blocksList[i].position = new Vector2(currentPos.y, currentPos.x) * rotationMatrix;
         }
-        transform.position += (Vector3)offset;
         rotationIndex++;
-
     }
+
     public bool CanTetrominoRotateTo(Vector2[] positionList, Vector2 offset)
     {
         bool canMove = true;
         foreach (Vector2 pos in positionList)
         {
-            if (blocksList[0].IsThereColliderAt(offset + pos + (Vector2)transform.position))
+            if (IsThereColliderAtPosition(offset + pos + (Vector2)transform.position))
             {
                 canMove = false;
                 break;
@@ -76,11 +79,21 @@ public class Tetromino : MonoBehaviour
 
     public void SlamTetromino()
     {
-        MoveTetrominoTo(GetHighestPointOfContact());
+        MoveTetrominoTo(GetLowestPositionTetrominoCanMoveTo());
         GameManager.instance.Tick(); //force a tick after slamming
     }
 
-    public Vector2 GetHighestPointOfContact()
+    public bool IsThereColliderAtPosition(Vector2 targPosition)
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(targPosition, transform.localScale / 2, 0, Vector2.down, 0, LM_Tetromino);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (!blocksList.Contains<Block>(hit.collider.GetComponent<Block>())) { return true; }
+        }
+        return false;
+    }
+    //for shadow and slam calculator
+    public Vector2 GetLowestPositionTetrominoCanMoveTo()
     {
         Debug.Log("\n");
         float highestY = -Mathf.Infinity;

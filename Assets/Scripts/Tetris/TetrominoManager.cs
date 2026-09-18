@@ -30,8 +30,17 @@ public class TetrominoManager : MonoBehaviour
     void SpawnTetromino(TetrominoData data, Vector2 pos)
     {
         GameObject spawnedTetromino = Instantiate(TetrominoPrefab, transform);
-        spawnedTetromino.transform.position = tilemap.WorldToCell(pos);
         spawnedTetromino.GetComponent<Tetromino>().InstantiateTetromino(data);
+        Vector3 spawnPos = new Vector2();
+        if (data.shape == TetrominoShape.I || data.shape == TetrominoShape.O)
+        {
+
+            spawnPos = pos + (Vector2.one * -0.5f);
+        } else
+        {
+            spawnPos = tilemap.WorldToCell(pos);
+        }
+        spawnedTetromino.transform.position = spawnPos;
 
         //temporary line for testing, later will handle setting active tetrominos a diff way maybe idk
         GameManager.instance.ActiveTetromino = spawnedTetromino.GetComponent<Tetromino>();
