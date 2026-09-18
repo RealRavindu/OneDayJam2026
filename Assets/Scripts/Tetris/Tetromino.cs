@@ -120,13 +120,16 @@ public class Tetromino : MonoBehaviour
                 }
             }
 
-            
+
         }
+        Transform blockTransform = blocksList[lowestBlockNum].transform;
+
+
         Debug.Log("Selected highest Y: " + highestY);
         Debug.Log("Selected block: " + blocksList[lowestBlockNum].name);
-        Transform blockTransform = blocksList[lowestBlockNum].transform;
         Debug.Log($"(transform.postion.y) {transform.position.y} - (block.position.y) {blockTransform.position.y}" +
             $" + (highestY) {highestY} + (blocklocalScale/2) {blockTransform.localScale.y/2} = (final vector){new Vector2(transform.position.x, transform.position.y - blockTransform.position.y + highestY + (blockTransform.localScale.y / 2))}");
+        
         return new Vector2(transform.position.x, transform.position.y - blockTransform.position.y + highestY);
     }
 
