@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public void StartGame()
+    public int lobbyCode;
+    public void ClickedHost()
     {
-        SceneManager.LoadScene(1);
+
+    }
+
+    public void ClickedJoin()
+    {
+
     }
 }
