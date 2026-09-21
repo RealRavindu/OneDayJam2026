@@ -2,10 +2,10 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
+using Unity.Netcode;
 //This class is an interface to move the Tetromino down
 //This class builds the tetromino based on the tetrominodata
-public class Tetromino : MonoBehaviour
+public class Tetromino : NetworkBehaviour
 {
     public TetrominoShape shape;
     public int rotationIndex

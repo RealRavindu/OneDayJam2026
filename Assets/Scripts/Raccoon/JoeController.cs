@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class JoeController : MonoBehaviour
+public class JoeController : NetworkBehaviour
 {
 
     private int health;
