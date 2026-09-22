@@ -365,13 +365,48 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3259203871128928609, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 868949353}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1469451551769141703, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 394190662}
   m_SourcePrefab: {fileID: 100100000, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
 --- !u!4 &394190660 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3259203871128928609, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
   m_PrefabInstance: {fileID: 394190659}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &394190661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1469451551769141703, guid: 23f8cd29602ae5144a78b39a4ff4ccfa, type: 3}
+  m_PrefabInstance: {fileID: 394190659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &394190662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394190661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 383656278
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &710749920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,6 +1212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668763335}
   - component: {fileID: 1668763334}
+  - component: {fileID: 1668763336}
   m_Layer: 0
   m_Name: TetrominoController
   m_TagString: Untagged
@@ -1219,6 +1255,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 710749921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1668763336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668763333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2581024510
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1753299612
 GameObject:
   m_ObjectHideFlags: 0
