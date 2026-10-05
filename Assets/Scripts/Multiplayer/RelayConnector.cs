@@ -1,41 +1,32 @@
-using UnityEngine;
-using Unity.Netcode;
-using Unity.Services.Relay.Models;
-using Unity.Services.Relay;
 using TMPro;
-using Unity.Networking.Transport.Relay;
+using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using Unity.Services.Core;
+using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class RelayConnector : NetworkBehaviour
+public class RelayConnector : MonoBehaviour
 {
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-
-    }
+    public static RelayConnector Instance;
+    public string joinCode;
     private async void Start()
     {
+        Instance = this;
+
+        DontDestroyOnLoad(this);
+
         await UnityServices.InitializeAsync();
 
         AuthenticationService.Instance.SignedIn += () => Debug.Log("Authentication has signed in, player ID: " + AuthenticationService.Instance.PlayerId);
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-    public TextMeshProUGUI joinCodeTextBox;
 
-    [Serialize]
-    public string joinCode
-    {
-        get { return _joinCode; }
-        set
-        {
-            _joinCode = value;
-            joinCodeTextBox.text = _joinCode;
-        }
+        SceneManager.LoadScene(1);
     }
-    private string _joinCode;
     public async void CreateRelay()
     {
 
@@ -46,25 +37,37 @@ public class RelayConnector : NetworkBehaviour
             RelayServerData relayServerData = allocation.ToRelayServerData("dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartHost();
-            //MainMenuManager.instance.ShowHostingLobbyGroup();
+            SceneManager.LoadScene("HostingLobby");
         } catch (RelayServiceException e)
         {
             Debug.Log(e);
         }
     }
 
-    public async void JoinRelay()
+    public async void JoinRelay(string _joinCode)
     {
         try
         {
-            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(_joinCode);
             RelayServerData relayServerData = joinAllocation.ToRelayServerData("dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartClient();
+            //tell host that you have connected and to proceed to character select screen here
+            ProceedToCharacterSelectServerRPC();
+            SceneManager.LoadScene("CharacterSelect");
 
         } catch (RelayServiceException e)
         {
             Debug.Log(e);
         }
     }
+
+    [ServerRpc]
+    private void ProceedToCharacterSelectServerRPC()
+    {
+        Debug.Log("Proceeding to character select since a client has connected");
+        SceneManager.LoadScene("CharacterSelect");
+    }
 }
+
+
