@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+//JOIN LOBBY SCRIPT
 public class LobbyCodeInputManager : MonoBehaviour
 {
     public Button connectBtn, backBtn;

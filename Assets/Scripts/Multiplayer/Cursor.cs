@@ -7,7 +7,7 @@ public class Cursor : NetworkBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
-        mousePosition.x = Mathf.Clamp(mousePosition.x, -9, 9); mousePosition.y = Mathf.Clamp(mousePosition.y, -9, 9);
+        mousePosition.x = Mathf.Clamp(mousePosition.x, -9, 9); mousePosition.y = Mathf.Clamp(mousePosition.y, -5, 5);
         transform.position = mousePosition;
     }
 }

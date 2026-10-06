@@ -3,11 +3,14 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using System.Linq;
+using System.Collections;
 
+//HOSTING LOBBY SCRIPT
 public class LobbyCodeDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI joinCodeDisplay, waitingMessage;
-
+    [SerializeField] private string waitingMessageString;
     [SerializeField] private float timeThreshold;
     private float time;
     private int i;
@@ -15,7 +18,8 @@ public class LobbyCodeDisplay : MonoBehaviour
     private void Start()
     {
         joinCodeDisplay.text = RelayConnector.Instance.joinCode;
-
+        waitingMessage.text = waitingMessageString;
+        StartCoroutine(WaitingForPlayersTextAnimation());
         backBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.Shutdown();
@@ -24,28 +28,23 @@ public class LobbyCodeDisplay : MonoBehaviour
     }
 
 
-    private void Update()
+    private IEnumerator WaitingForPlayersTextAnimation()
     {
-        time += Time.deltaTime;
-        if (time > timeThreshold)
+        int i = 0;
+        while (true)
         {
-            i++;
-            time = 0;
-            switch (i)
+            if (i < 3)
             {
-                case 0:
-                    waitingMessage.text = "Waiting for player.";
-                    break;
-                case 1:
-                    waitingMessage.text = "Waiting for player..";
-                    break;
-                case 2:
-                    waitingMessage.text = "Waiting for player...";
-                    break;
-                default:
-                    i = 0; 
-                    break;
+                i++;
+                waitingMessage.text = waitingMessage.text.Insert(waitingMessage.text.Length, ".");
             }
+            else 
+            {
+                i = 0;
+                waitingMessage.text = waitingMessageString;
+            }
+            yield return new WaitForSeconds(timeThreshold);
         }
     }
+
 }

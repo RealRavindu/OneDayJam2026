@@ -17,7 +17,7 @@ public class SRS : MonoBehaviour
     //      O
     //  L       R
     //      2
-    //Is a good way to imagine it. So a rotation index of 0 would mean that the tetromino is going from L > 0 (rotating clockwise from left to original). A rotation index
+    //Above pseudo-diagram is a good way to imagine it. So a rotation index of 0 would mean that the tetromino is going from L > 0 (rotating clockwise from left to original). A rotation index
     //of 1 would be 0 > R. 2 is R > 2. 3 is 2 > L and then it loops from there. Since currently in this game's scope we are only doing clockwise rotation there are only 4 rotation indices.
     //However, if counter-clockwise rotation is introduced we will then need 4 additional rotation indices for counter-clockwise changes (L > 2, 2 > R, R > 0, 0 > L) and we'll need to
     //edit the CSV file to have 4 additional rows with their respective SRS standardized offsets.
