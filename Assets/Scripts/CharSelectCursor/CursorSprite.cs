@@ -11,6 +11,6 @@ public class CursorSprite : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, parentTransform.position, moveSpeed);
+        transform.position = Vector3.Lerp(transform.position, parentTransform.position, moveSpeed * Time.deltaTime);
     }
 }

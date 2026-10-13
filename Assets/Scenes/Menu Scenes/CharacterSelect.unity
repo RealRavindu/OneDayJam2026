@@ -505,6 +505,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.99215686
       objectReference: {fileID: 0}
+    - target: {fileID: 7197888527952031982, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557039826573348264, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: moveSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8482485297710688648, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.0874124
@@ -545,11 +553,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: tetrisWaypoint
+      value: 
+      objectReference: {fileID: 785886889}
+    - target: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: raccoonWaypoint
+      value: 
+      objectReference: {fileID: 1923093969}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+--- !u!114 &1127255315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+  m_PrefabInstance: {fileID: 1127255314}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f604b269ce1e14946a8c09c554881ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cursor
 --- !u!1 &1196666790
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +797,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1280314442}
+  - component: {fileID: 1280314443}
   - component: {fileID: 1280314441}
   m_Layer: 0
   m_Name: CharacterSelectScript
@@ -791,8 +819,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelect
   ShowTopMostFoldoutHeaderGroup: 1
-  RaccoonBtn: {fileID: 0}
-  TetrisBtn: {fileID: 0}
+  RaccoonBtn: {fileID: 1315654599}
+  TetrisBtn: {fileID: 1241867835}
+  p1Cursor: {fileID: 1993167606}
+  p2Cursor: {fileID: 1127255315}
 --- !u!4 &1280314442
 Transform:
   m_ObjectHideFlags: 0
@@ -808,6 +838,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280314443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280314440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 827818252
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1310285426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1614,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.6868548
       objectReference: {fileID: 0}
+    - target: {fileID: 7197888527952031982, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557039826573348264, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: moveSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8482485297710688648, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.9823445
@@ -1597,11 +1662,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: tetrisWaypoint
+      value: 
+      objectReference: {fileID: 785886889}
+    - target: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+      propertyPath: raccoonWaypoint
+      value: 
+      objectReference: {fileID: 1923093969}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+--- !u!114 &1993167606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9084233950265743960, guid: 34fd6ed7040f50145ba7673d97c13af7, type: 3}
+  m_PrefabInstance: {fileID: 1993167605}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f604b269ce1e14946a8c09c554881ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cursor
 --- !u!1 &2050823116
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,34 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerCharacterInfo : MonoBehaviour
+public class PlayerCharacterInfo : NetworkBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public NetworkVariable<player> TetrisPlayer = new NetworkVariable<player>(player.none);
+    public NetworkVariable<player> RaccoonPlayer = new NetworkVariable<player>(player.none);
+    public static PlayerCharacterInfo instance;
+    private void Start()
     {
-        
-    }
+        instance = this;
+        DontDestroyOnLoad(this);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        TetrisPlayer.OnValueChanged += (previousValue, newValue) =>
+        {
+            if(RaccoonPlayer.Value == newValue)
+            {
+                RaccoonPlayer.Value = player.none;
+            }
+        };
+        RaccoonPlayer.OnValueChanged += (previousValue, newValue) =>
+        {
+            if (TetrisPlayer.Value == newValue)
+            {
+                TetrisPlayer.Value = player.none;
+            }
+        };
     }
+    
+}
+public enum player
+{
+    player1, player2, none
 }
