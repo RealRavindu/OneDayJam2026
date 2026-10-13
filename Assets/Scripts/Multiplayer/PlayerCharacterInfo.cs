@@ -26,9 +26,23 @@ public class PlayerCharacterInfo : NetworkBehaviour
             }
         };
     }
-    
+    [ServerRpc(RequireOwnership = false)]
+    public void SelectTetrisForPlayerServerRpc(PlayerCharacterInfo.player _player)
+    {
+        TetrisPlayer.Value = _player;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SelectRaccoonForPlayerServerRpc(PlayerCharacterInfo.player _player)
+    {
+        RaccoonPlayer.Value = _player;
+    }
+    public enum player
+    {
+        player1, player2, none
+    }
+
+
 }
-public enum player
-{
-    player1, player2, none
-}
+
+
+
