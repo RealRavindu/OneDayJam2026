@@ -25,6 +25,14 @@ public class RelayConnector : MonoBehaviour
         AuthenticationService.Instance.SignedIn += () => Debug.Log("Authentication has signed in, player ID: " + AuthenticationService.Instance.PlayerId);
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
+        NetworkManager.Singleton.OnClientConnectedCallback += (clientId) =>
+        {
+            Debug.Log("Client has connected: " + clientId);
+            if (clientId != NetworkManager.ServerClientId)
+            {
+                GoToCharacterSelect();
+            }
+        };
         SceneManager.LoadScene(1);
     }
     public async void CreateRelay()
@@ -38,7 +46,8 @@ public class RelayConnector : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartHost();
             SceneManager.LoadScene("HostingLobby");
-        } catch (RelayServiceException e)
+        }
+        catch (RelayServiceException e)
         {
             Debug.Log(e);
         }
@@ -52,21 +61,17 @@ public class RelayConnector : MonoBehaviour
             RelayServerData relayServerData = joinAllocation.ToRelayServerData("dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartClient();
-            //tell host that you have connected and to proceed to character select screen here
-            ProceedToCharacterSelectServerRPC();
-            SceneManager.LoadScene("CharacterSelect");
 
-        } catch (RelayServiceException e)
+        }
+        catch (RelayServiceException e)
         {
             Debug.Log(e);
         }
     }
 
-    [ServerRpc]
-    private void ProceedToCharacterSelectServerRPC()
+    private void GoToCharacterSelect()
     {
-        Debug.Log("Proceeding to character select since a client has connected");
-        SceneManager.LoadScene("CharacterSelect");
+        NetworkManager.Singleton.SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
     }
 }
 
