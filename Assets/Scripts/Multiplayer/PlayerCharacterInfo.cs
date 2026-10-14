@@ -53,9 +53,20 @@ public class PlayerCharacterInfo : NetworkBehaviour
     {
         return (TetrisPlayer.Value == _player || RaccoonPlayer.Value == _player);
     }
+    public character WhoDidPlayerSelect(player _player)
+    {
+        if (TetrisPlayer.Value == _player) return character.tetris;
+        else if (RaccoonPlayer.Value == _player) return character.raccoon;
+        else return character.none;
+    }
     public enum player
     {
         player1, player2, none
+    }
+
+    public enum character
+    {
+        raccoon, tetris, none
     }
 }
 

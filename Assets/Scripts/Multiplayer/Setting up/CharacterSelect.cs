@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CharacterSelect : NetworkBehaviour
 {
     public static CharacterSelect instance;
+    [SerializeField] Button RaccoonBtn, TetrisBtn;
     [SerializeField] private Cursor p1Cursor, p2Cursor;
     private NetworkVariable<bool> p1IsReady = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> p2IsReady = new NetworkVariable<bool>(false);
@@ -24,7 +25,15 @@ public class CharacterSelect : NetworkBehaviour
         p1Cursor.NetworkObject.ChangeOwnership(NetworkManager.ConnectedClientsIds[0]);
         p2Cursor.NetworkObject.ChangeOwnership(NetworkManager.ConnectedClientsIds[1]);
 
-
+        p1IsReady.OnValueChanged += (previousValue, newValue) =>
+        {
+            if (newValue) //readied up
+            {
+                //visual update yet to be implemented. Need to signify readying up.
+                //Thinking of selecting the button under whatever selection to show readied state.
+                //check which button player has selected and select that button.
+            }
+        };
     }
 
     [Rpc(SendTo.Server)]
@@ -69,5 +78,7 @@ public class CharacterSelect : NetworkBehaviour
             return p2IsReady.Value;
         }
     }
+
+
 
 }
