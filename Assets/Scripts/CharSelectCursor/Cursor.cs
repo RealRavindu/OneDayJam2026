@@ -7,6 +7,7 @@ public class Cursor : NetworkBehaviour
     private Vector3 tetrisWaypoint, raccoonWaypoint, middlePoint;
     private PlayerCharacterInfo.player Player;
     private float currentAxisValue =0;
+
     private void Start()
     {
         tetrisWaypoint = tetrisWaypointTransform.position;
@@ -19,17 +20,25 @@ public class Cursor : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (Input.GetAxisRaw("Horizontal") > 0 && currentAxisValue ==0) //right
+        if (!CharacterSelect.instance.GetPlayerReadyState(Player)) //check to see if player readied up.
         {
-            SelectCharacter(PlayerCharacterInfo.instance.TetrisPlayer, tetrisWaypoint);
+            if (Input.GetAxisRaw("Horizontal") > 0 && currentAxisValue == 0) //right
+            {
+                SelectCharacter(PlayerCharacterInfo.instance.TetrisPlayer, tetrisWaypoint);
+            }
+            if (Input.GetAxisRaw("Horizontal") < 0 && currentAxisValue == 0) //left
+            {
+                SelectCharacter(PlayerCharacterInfo.instance.RaccoonPlayer, raccoonWaypoint);
+            }
+            if (Input.GetAxisRaw("Vertical") < 0 && currentAxisValue == 0) //down
+            {
+                UnselectCharacter();
+            }
         }
-        if (Input.GetAxisRaw("Horizontal") < 0 && currentAxisValue == 0) //left
+        
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            SelectCharacter(PlayerCharacterInfo.instance.RaccoonPlayer, raccoonWaypoint);
-        }
-        if(Input.GetAxisRaw("Vertical")<0 && currentAxisValue == 0) //down
-        {
-            UnselectCharacter();
+            ReadyUp();
         }
         currentAxisValue = (new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude);
     }
@@ -61,5 +70,10 @@ public class Cursor : NetworkBehaviour
         Debug.Log("Unselecting character");
         transform.position = middlePoint;
         PlayerCharacterInfo.instance.UnselectForPlayerServerRpc(Player);
+    }
+
+    private void ReadyUp()
+    {
+        CharacterSelect.instance.ChangeReadyStateServerRpc();
     }
 }

@@ -22,6 +22,6 @@ public class CursorSprite : MonoBehaviour
 
     public void DoCantSelectAnimation()
     {
-
+        //yet to implement
     }
 }

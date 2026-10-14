@@ -1,39 +1,73 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSelect : NetworkBehaviour
 {
-    [SerializeField] private Button RaccoonBtn, TetrisBtn;
+    public static CharacterSelect instance;
     [SerializeField] private Cursor p1Cursor, p2Cursor;
-
+    private NetworkVariable<bool> p1IsReady = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> p2IsReady = new NetworkVariable<bool>(false);
     private void Start()
     {
-        RaccoonBtn.onClick.AddListener(() =>
+        if(instance != null && instance != this)
         {
-            ClickedRaccoonButtonServerRpc();
-        });
-        TetrisBtn.onClick.AddListener(() =>
-        {
-            ClickedTetrisButtonServerRpc();
-        });
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
 
         if (!IsServer) return;
         Debug.Log("Server is assigning cursors to players");
-        //NetworkManager.SpawnManager.InstantiateAndSpawn(NetworkManager.Singleton.SpawnManager)
         p1Cursor.NetworkObject.ChangeOwnership(NetworkManager.ConnectedClientsIds[0]);
         p2Cursor.NetworkObject.ChangeOwnership(NetworkManager.ConnectedClientsIds[1]);
+
+
     }
 
-    [ServerRpc]
-    private void ClickedRaccoonButtonServerRpc()
+    [Rpc(SendTo.Server)]
+    public void ChangeReadyStateServerRpc(RpcParams rpcParams = default)
     {
-        Debug.Log($"User {NetworkManager.LocalClientId} has clicked the raccoon button");
+        PlayerCharacterInfo.player _player = PlayerCharacterInfo.player.none;
+        ulong senderId = rpcParams.Receive.SenderClientId;
+        if (senderId == p1Cursor.OwnerClientId)
+        {
+            _player = PlayerCharacterInfo.player.player1;
+        }
+        else if (senderId == p2Cursor.OwnerClientId)
+        {
+            _player = PlayerCharacterInfo.player.player2;
+        }
+        else return;
+
+
+        if (!PlayerCharacterInfo.instance.HasPlayerMadeASelection(_player))
+        {
+            Debug.Log("Player has not made a selection yet");
+            return;
+
+        }
+
+        if(_player == PlayerCharacterInfo.player.player1)
+        {
+            p1IsReady.Value = !p1IsReady.Value;
+        } else
+        {
+            p2IsReady.Value = !p2IsReady.Value;
+        }
     }
-    [ServerRpc]
-    private void ClickedTetrisButtonServerRpc()
+
+    public bool GetPlayerReadyState(PlayerCharacterInfo.player _player)
     {
-        Debug.Log($"User {NetworkManager.LocalClientId} has clicked the tetris button");
+        if(_player == PlayerCharacterInfo.player.player1)
+        {
+            return p1IsReady.Value;
+        }else
+        {
+            return p2IsReady.Value;
+        }
     }
 
 }

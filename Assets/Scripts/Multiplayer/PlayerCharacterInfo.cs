@@ -49,6 +49,10 @@ public class PlayerCharacterInfo : NetworkBehaviour
             RaccoonPlayer.Value = player.none;
         }
     }
+    public bool HasPlayerMadeASelection(player _player)
+    {
+        return (TetrisPlayer.Value == _player || RaccoonPlayer.Value == _player);
+    }
     public enum player
     {
         player1, player2, none
