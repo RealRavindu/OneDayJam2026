@@ -19,4 +19,9 @@ public class CursorSprite : MonoBehaviour
             transform.position = currentPos;
         }
     }
+
+    public void DoCantSelectAnimation()
+    {
+
+    }
 }

@@ -1,3 +1,4 @@
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,40 +9,50 @@ public class PlayerCharacterInfo : NetworkBehaviour
     public static PlayerCharacterInfo instance;
     private void Start()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         instance = this;
         DontDestroyOnLoad(this);
 
-        TetrisPlayer.OnValueChanged += (previousValue, newValue) =>
-        {
-            if(RaccoonPlayer.Value == newValue)
-            {
-                RaccoonPlayer.Value = player.none;
-            }
-        };
-        RaccoonPlayer.OnValueChanged += (previousValue, newValue) =>
-        {
-            if (TetrisPlayer.Value == newValue)
-            {
-                TetrisPlayer.Value = player.none;
-            }
-        };
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void SelectTetrisForPlayerServerRpc(PlayerCharacterInfo.player _player)
+    [Rpc(SendTo.Server)]
+    public void SelectTetrisForPlayerServerRpc(player _player)
     {
+        if (RaccoonPlayer.Value == _player)
+        {
+            RaccoonPlayer.Value = player.none;
+        }
         TetrisPlayer.Value = _player;
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void SelectRaccoonForPlayerServerRpc(PlayerCharacterInfo.player _player)
+    [Rpc(SendTo.Server)]
+    public void SelectRaccoonForPlayerServerRpc(player _player)
     {
+        if (TetrisPlayer.Value == _player)
+        {
+            TetrisPlayer.Value = player.none;
+        }
         RaccoonPlayer.Value = _player;
+    }
+    [Rpc(SendTo.Server)]
+    public void UnselectForPlayerServerRpc(player _player)
+    {
+        if (TetrisPlayer.Value == _player)
+        {
+            TetrisPlayer.Value = player.none;
+        }
+        if (RaccoonPlayer.Value == _player)
+        {
+            RaccoonPlayer.Value = player.none;
+        }
     }
     public enum player
     {
         player1, player2, none
     }
-
-
 }
 
 
