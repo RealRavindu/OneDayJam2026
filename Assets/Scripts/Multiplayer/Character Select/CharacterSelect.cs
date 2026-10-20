@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class CharacterSelect : NetworkBehaviour
 {
@@ -10,9 +11,11 @@ public class CharacterSelect : NetworkBehaviour
     [SerializeField] private Cursor p1Cursor, p2Cursor;
     private NetworkVariable<bool> p1IsReady = new NetworkVariable<bool>(false);
     private NetworkVariable<bool> p2IsReady = new NetworkVariable<bool>(false);
+    [SerializeField] private float countdownTillGameBegins = 5;
+    private Coroutine countdownToBeginGameCR;
     private void Start()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
@@ -27,6 +30,29 @@ public class CharacterSelect : NetworkBehaviour
 
         p1IsReady.OnValueChanged += (previousValue, newValue) =>
         {
+            ReadyCheck();
+
+            if (newValue) //readied up
+            {
+                //visual update yet to be implemented. Need to signify readying up.
+                //Thinking of selecting the button under whatever selection to show readied state.
+                //check which button player has selected and select that button.
+                if (PlayerCharacterInfo.instance.TetrisPlayer.Value == PlayerCharacterInfo.player.player1)
+                {
+                    TetrisBtn.Select();
+                }else
+                {
+                    RaccoonBtn.Select();
+                }
+            } else
+            {
+
+            }
+        };
+        p2IsReady.OnValueChanged += (previousValue, newValue) =>
+        {
+            ReadyCheck();
+
             if (newValue) //readied up
             {
                 //visual update yet to be implemented. Need to signify readying up.
@@ -59,10 +85,11 @@ public class CharacterSelect : NetworkBehaviour
 
         }
 
-        if(_player == PlayerCharacterInfo.player.player1)
+        if (_player == PlayerCharacterInfo.player.player1)
         {
             p1IsReady.Value = !p1IsReady.Value;
-        } else
+        }
+        else
         {
             p2IsReady.Value = !p2IsReady.Value;
         }
@@ -70,15 +97,43 @@ public class CharacterSelect : NetworkBehaviour
 
     public bool GetPlayerReadyState(PlayerCharacterInfo.player _player)
     {
-        if(_player == PlayerCharacterInfo.player.player1)
+        if (_player == PlayerCharacterInfo.player.player1)
         {
             return p1IsReady.Value;
-        }else
+        }
+        else
         {
             return p2IsReady.Value;
         }
     }
 
+    private void ReadyCheck()
+    {
+        if (p1IsReady.Value && p2IsReady.Value)
+        {
+            if (countdownToBeginGameCR == null)
+            {
+                countdownToBeginGameCR = StartCoroutine(CountdownAndBeginGame());
+            }
+        }
+        else
+        {
+            if (countdownToBeginGameCR != null)
+            {
+                StopCoroutine(CountdownAndBeginGame());
+            }
+            countdownToBeginGameCR = null;
+        }
+    }
 
-
+    private IEnumerator CountdownAndBeginGame()
+    {
+        float t = 0;
+        while (t < countdownTillGameBegins)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        NetworkManager.Singleton.SceneManager.LoadScene("NewTetris", UnityEngine.SceneManagement.LoadSceneMode.Single);
+    }
 }
