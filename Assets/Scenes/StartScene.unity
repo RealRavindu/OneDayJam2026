@@ -246,7 +246,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 1675512313}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 0fa9c58b7335ccf42a4b74cc8e8ca3cf, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -464,8 +465,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacterInfo
   ShowTopMostFoldoutHeaderGroup: 1
-  TetrisPlayer: 3
-  RaccoonPlayer: 3
+  TetrisPlayer:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 2
+  RaccoonPlayer:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 2
 --- !u!4 &1821968928
 Transform:
   m_ObjectHideFlags: 0

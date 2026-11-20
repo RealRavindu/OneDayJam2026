@@ -9,7 +9,6 @@ public class JoeController : NetworkBehaviour
     private Rigidbody2D rb;
     private Vector2 playerInput;
 
-    public GameObject facingIndicator;
     //Horizontal Movement
     [Header("Horizontal Variables")]
     public float hAccelTime;
@@ -28,9 +27,7 @@ public class JoeController : NetworkBehaviour
     [Header("Jump Variables")]
     public float jumpSpeed;
     public float grav;
-    private bool canJump;
     private bool tryJump;
-    private bool useJump;
     private bool queueJump;
     public float queueJumpBuffer;
     public float coyoteTimeBuffer;
@@ -66,8 +63,6 @@ public class JoeController : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        canJump = true;
-
         rb = GetComponent<Rigidbody2D>();
 
         hAccel = hMaxSpeed / hAccelTime;
@@ -77,11 +72,13 @@ public class JoeController : NetworkBehaviour
         health = maxHealth;
 
         facingDirection = 1;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!IsOwner) return;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
@@ -93,13 +90,14 @@ public class JoeController : NetworkBehaviour
             {
                 playerInput.x = -1;
                 facingDirection = -1;
+                transform.localScale = new Vector2(facingDirection, 1);
             }
 
             else
             {
                 playerInput.x = 1f;
                 facingDirection = 1;
-
+                transform.localScale = new Vector2(facingDirection, 1);
             }
         }
 
@@ -111,14 +109,13 @@ public class JoeController : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             tryJump = true;
-          
-            Debug.Log("TRY JUMP!");
+
 
         }
 
         if (canCoyote)
         {
-           coyoteTime += Time.deltaTime;
+            coyoteTime += Time.deltaTime;
 
             if (coyoteTime > coyoteTimeBuffer)
             {
@@ -159,7 +156,6 @@ public class JoeController : NetworkBehaviour
         wasOnWallLastFrame = isAgainstWall;
         wasOnGroundLastFrame = isGrounded;
 
-        facingIndicator.transform.position = rb.position + new Vector2(facingDirection * 2, 0f);
         isGrounded = GroundCheck();
         isAgainstWall = CheckForwardWall();
 
@@ -175,12 +171,12 @@ public class JoeController : NetworkBehaviour
             canSpiderman = true;
             spidermanTime = Time.deltaTime;
         }
-        
+
         if (tryJump)
         {
             TryJump(isGrounded);
         }
-       
+
         if (!isGrounded)
         {
             if (isAgainstWall && rb.linearVelocityY < 0 && playerInput.x != 0)
@@ -190,7 +186,7 @@ public class JoeController : NetworkBehaviour
             else
             {
                 rb.linearVelocityY -= grav * Time.deltaTime;
-            } 
+            }
         }
         else
         {
@@ -201,7 +197,7 @@ public class JoeController : NetworkBehaviour
                 UseJump();
                 queueJump = false;
             }
-               
+
         }
 
         if (rb.position.y < -5f)
@@ -214,8 +210,8 @@ public class JoeController : NetworkBehaviour
             rb.linearVelocityY = maxFallSpeed;
         }
     }
-    
-        
+
+
     private void TryJump(bool onGround)
     {
         tryJump = false;
@@ -253,9 +249,9 @@ public class JoeController : NetworkBehaviour
             Debug.Log("QUEUED");
         }
 
-       
 
-       
+
+
     }
 
     private void UseJump()
@@ -265,14 +261,14 @@ public class JoeController : NetworkBehaviour
 
     public bool CheckForwardWall()
     {
-        RaycastHit2D wallHit = Physics2D.BoxCast(rb.position, new Vector2(1f, 0.8f), 0f, new Vector2(facingDirection, 0f), 0.05f,groundLayer);
+        RaycastHit2D wallHit = Physics2D.BoxCast(rb.position, new Vector2(1f, 0.8f), 0f, new Vector2(facingDirection, 0f), 0.05f, groundLayer);
 
         if (wallHit)
         {
             // Debug.Log("HIT WALL");
             wallDirection = facingDirection;
             return true;
-            
+
         }
         else
         {
@@ -317,12 +313,12 @@ public class JoeController : NetworkBehaviour
 
         rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -hMaxSpeed, hMaxSpeed);
 
-       // Debug.Log(rb.linearVelocityX);
+        // Debug.Log(rb.linearVelocityX);
     }
 
     public bool GroundCheck()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(rb.position, new Vector2(0.8f,1f), 0f, Vector2.down, 0.05f, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(rb.position, new Vector2(0.8f, 1f), 0f, Vector2.down, 0.05f, groundLayer);
 
         if (hit)
         {
@@ -334,11 +330,6 @@ public class JoeController : NetworkBehaviour
         {
             return false;
         }
-    }
-
-    private void TakeDamage(int amount)
-    {
-
     }
 
     private void ApplyKnockback(Vector2 hazardPos)
@@ -380,4 +371,6 @@ public class JoeController : NetworkBehaviour
             }
         }
     }
+
+    
 }

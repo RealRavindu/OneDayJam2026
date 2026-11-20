@@ -17,8 +17,8 @@ public class PlayerCharacterInfo : NetworkBehaviour
 
         instance = this;
         DontDestroyOnLoad(this);
-
     }
+
     [Rpc(SendTo.Server)]
     public void SelectTetrisForPlayerServerRpc(player _player)
     {

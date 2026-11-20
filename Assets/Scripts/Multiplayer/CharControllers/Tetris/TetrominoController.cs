@@ -1,9 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 //This class moves Tetrominos left and right
 //This class rotates Tetrominos
-public class TetrominoController : MonoBehaviour
+public class TetrominoController : NetworkBehaviour
 {
     Tetromino activeTetromino => GameManager.instance.ActiveTetromino;
     
@@ -16,6 +17,7 @@ public class TetrominoController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
         //Horizontal movement
         if (Input.GetAxisRaw("TetrisHorizontal") != 0)
         {
