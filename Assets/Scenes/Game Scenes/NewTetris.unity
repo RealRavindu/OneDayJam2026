@@ -393,7 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharOwnershipManager
   Raccoon: {fileID: 285146344}
-  Tetris: {fileID: 1668763336}
+  TetrisController: {fileID: 0}
+  TetrisManager: {fileID: 0}
 --- !u!4 &580984645
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,7 +1315,7 @@ MonoBehaviour:
     - {x: 1, y: 1}
     - {x: -1, y: 0}
   TetrominoPrefab: {fileID: 7889978725604602838, guid: 8de75865dd0f7f641a458f723420c9ed, type: 3}
-  spawnPointOffsetFromTop: {x: 0, y: 0}
+  spawnPointOffsetFromTop: {x: 9, y: 0}
 --- !u!4 &1954094916
 Transform:
   m_ObjectHideFlags: 0

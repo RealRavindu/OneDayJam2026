@@ -21,9 +21,10 @@ public class TetrominoManager : NetworkBehaviour
     public void SpawnRandomTetromino(Vector2 position)
     {
         int randomNum = Random.Range(0, 7);
-        SpawnTetromino(Tetrominos[randomNum], position);
+        SpawnTetrominoRpc(Tetrominos[randomNum], position);
     }
-    void SpawnTetromino(TetrominoData data, Vector2 pos)
+    [Rpc(SendTo.Everyone)]
+    void SpawnTetrominoRpc(TetrominoData data, Vector2 pos)
     {
         GameObject spawnedTetromino = Instantiate(TetrominoPrefab, transform);
         NetworkObject networkObj = spawnedTetromino.GetComponent<NetworkObject>();
@@ -34,7 +35,6 @@ public class TetrominoManager : NetworkBehaviour
         Vector3 spawnPos = new Vector2();
         if (data.shape == TetrominoShape.I || data.shape == TetrominoShape.O)
         {
-
             spawnPos = pos + (Vector2.one * -0.5f);
         } else
         {
