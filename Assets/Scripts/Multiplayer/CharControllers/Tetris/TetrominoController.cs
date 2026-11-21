@@ -76,7 +76,7 @@ public class TetrominoController : NetworkBehaviour
         Vector2[] positionsToRotateTo = new Vector2[4];
         for (int i = 0; i < 4; i++)
         {
-            Vector2 currentPos = activeTetromino.blocksList[i].position;
+            Vector2 currentPos = activeTetromino.blocksList[i].position.Value;
             positionsToRotateTo[i] = new Vector2(currentPos.y, currentPos.x) * rotationMatrix;
         }
 

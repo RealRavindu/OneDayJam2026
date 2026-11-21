@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using Unity.Netcode;
+using System.Runtime.CompilerServices;
 //This class handles spawning tetrominos
 public class TetrominoManager : NetworkBehaviour
 {
@@ -12,26 +13,32 @@ public class TetrominoManager : NetworkBehaviour
     [SerializeField] private Vector2 spawnPointOffsetFromTop;
     private void Start()
     {
+        EventCore.OnClientLoaded += StartAfterSync;
         instance = this;
         tilemap = GameObject.FindAnyObjectByType<Tilemap>();
-        if (!IsOwner) return;
+        
+        
+    }
+    private void StartAfterSync()
+    {
+        Debug.Log("Starting after syncing; [tetromino manager script]");
         SpawnRandomTetromino((Vector2)Camera.main.ViewportToWorldPoint(Vector2.up) - spawnPointOffsetFromTop);
     }
 
     public void SpawnRandomTetromino(Vector2 position)
     {
+        if (!IsServer) return;
         int randomNum = Random.Range(0, 7);
-        SpawnTetrominoRpc(Tetrominos[randomNum], position);
+        SpawnTetromino(Tetrominos[randomNum], position);
     }
-    [Rpc(SendTo.Everyone)]
-    void SpawnTetrominoRpc(TetrominoData data, Vector2 pos)
+    void SpawnTetromino(TetrominoData data, Vector2 pos)
     {
         GameObject spawnedTetromino = Instantiate(TetrominoPrefab, transform);
         NetworkObject networkObj = spawnedTetromino.GetComponent<NetworkObject>();
         networkObj.SpawnWithOwnership(NetworkManager.LocalClientId);
+        Debug.Log("Instantiating a tetromino, sending data to everyone. This log should appear on the connected client.");
 
-
-        spawnedTetromino.GetComponent<Tetromino>().InstantiateTetromino(data);
+        spawnedTetromino.GetComponent<Tetromino>().InstantiateTetrominoRpc(data);
         Vector3 spawnPos = new Vector2();
         if (data.shape == TetrominoShape.I || data.shape == TetrominoShape.O)
         {
@@ -52,3 +59,5 @@ public enum TetrominoShape //names of the 7 tetromino shapes
 {
     I, O, L, J, T, Z, S
 }
+
+

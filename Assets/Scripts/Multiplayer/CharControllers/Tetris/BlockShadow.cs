@@ -27,7 +27,7 @@ public class BlockShadow : MonoBehaviour
     }
     private void Update()
     {
-        position = parentBlock.position;
+        position = parentBlock.position.Value;
         if (parentBlock.tetromino != GameManager.instance.ActiveTetromino) Destroy(this.gameObject);
     }
 

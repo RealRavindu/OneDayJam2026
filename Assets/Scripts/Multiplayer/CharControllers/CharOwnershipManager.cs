@@ -6,12 +6,15 @@ public class CharOwnershipManager : MonoBehaviour
     public NetworkObject Raccoon, TetrisController, TetrisManager;
     private void Start()
     {
-        if (!NetworkManager.Singleton.IsHost) return;
-        SetOwnershipOfCharactersToRelevantPlayers();
-        
+        EventCore.OnClientLoaded += StartAfterSync;
     }
     
-
+    private void StartAfterSync()
+    {
+        Debug.Log("Starting after syncing; [CharOwnerShipManager]");
+        if (!NetworkManager.Singleton.IsHost) return;
+        SetOwnershipOfCharactersToRelevantPlayers();
+    }
     private void SetOwnershipOfCharactersToRelevantPlayers()
     {
         Debug.Log("Setting ownership");

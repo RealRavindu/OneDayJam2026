@@ -1,27 +1,28 @@
 using JetBrains.Annotations;
-using UnityEngine;
 using System.Linq;
+using Unity.Netcode;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 //This class positions itself on instantiation
 //This class checks for collisions in orthogonal directions
 //This class moves in orthogonal directions
-public class Block : MonoBehaviour
+public class Block : NetworkBehaviour
 {
     public Tetromino tetromino;
-    public Vector2 position
+    public NetworkVariable<Vector2> position = new NetworkVariable<Vector2>(Vector2.zero);
+    private void Start()
     {
-        get { return _position; }
-        set
-        {
-            transform.position = value + (Vector2)transform.parent.position;
-            _position = value;
-        }
+        position.OnValueChanged += ChangePositionOfBlock;
     }
-    [SerializeField]
-    private Vector2 _position;
+    private void ChangePositionOfBlock(Vector2 oldValue, Vector2 value)
+    {
+        Debug.Log("Block pos changed");
+        transform.position = value + (Vector2)transform.parent.position;
+    }
     public LayerMask LM_Tetromino;
     public void InstantiateBlock(Vector2 pos, Tetromino parentTetromino)
     {
         tetromino = parentTetromino;
-        position = pos;
+        position.Value = pos;
     }
 }

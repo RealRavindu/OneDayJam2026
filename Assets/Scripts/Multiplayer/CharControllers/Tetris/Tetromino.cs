@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 //This class is an interface to move the Tetromino down
@@ -22,13 +23,19 @@ public class Tetromino : MonoBehaviour
     public Block[] blocksList = new Block[4];
     public LayerMask LM_Tetromino;
     public Dictionary<int, List<Vector2Int>> testSequence;
-    public void InstantiateTetromino(TetrominoData data)
+    [Rpc(SendTo.Everyone)]
+    public void InstantiateTetrominoRpc(TetrominoData data)
     {
+        Debug.Log("shape data: " + data.shape);
+        Debug.Log("data.blockPositions[1]: " + data.blockPositions[1]);
         shape = data.shape;
+        Debug.Log("shape: " + shape);
         testSequence = (shape == TetrominoShape.I) ? SRS.instance.I_TestSequences : SRS.instance.O_TestSequences;
 
+        Debug.Log("testSequence: " + testSequence[0]);
         for (int i = 0; i < 4; i++)
         {
+            Debug.Log("Setting up block positions: " + data.blockPositions[i]);
             blocksList[i].InstantiateBlock(data.blockPositions[i], this);
         }
     }
@@ -44,7 +51,7 @@ public class Tetromino : MonoBehaviour
         bool canMove = true;
         foreach (Block block in blocksList)
         {
-            if (IsThereColliderAtPosition(position + block.position))
+            if (IsThereColliderAtPosition(position + block.position.Value))
             {
                 canMove = false;
                 break;
@@ -57,8 +64,8 @@ public class Tetromino : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            Vector2 currentPos = blocksList[i].position;
-            blocksList[i].position = new Vector2(currentPos.y, currentPos.x) * rotationMatrix;
+            Vector2 currentPos = blocksList[i].position.Value;
+            blocksList[i].position.Value = new Vector2(currentPos.y, currentPos.x) * rotationMatrix;
         }
         rotationIndex++;
     }

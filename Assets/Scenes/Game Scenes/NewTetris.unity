@@ -393,8 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharOwnershipManager
   Raccoon: {fileID: 285146344}
-  TetrisController: {fileID: 0}
-  TetrisManager: {fileID: 0}
+  TetrisController: {fileID: 1668763336}
+  TetrisManager: {fileID: 1954094917}
 --- !u!4 &580984645
 Transform:
   m_ObjectHideFlags: 0
@@ -1240,6 +1240,79 @@ Transform:
   - {fileID: 1479753975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1947174519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1947174521}
+  - component: {fileID: 1947174522}
+  - component: {fileID: 1947174520}
+  m_Layer: 0
+  m_Name: ClientConnectionChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1947174520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947174519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 212a1a9d4be0f554888715b9b91c0320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClientConnectionChecker
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!4 &1947174521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947174519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.58781, y: 4.05019, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1947174522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947174519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 746806286
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1954094914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1388,7 @@ MonoBehaviour:
     - {x: 1, y: 1}
     - {x: -1, y: 0}
   TetrominoPrefab: {fileID: 7889978725604602838, guid: 8de75865dd0f7f641a458f723420c9ed, type: 3}
-  spawnPointOffsetFromTop: {x: 9, y: 0}
+  spawnPointOffsetFromTop: {x: -35, y: 0}
 --- !u!4 &1954094916
 Transform:
   m_ObjectHideFlags: 0
@@ -1370,3 +1443,4 @@ SceneRoots:
   - {fileID: 232041122}
   - {fileID: 285146343}
   - {fileID: 580984645}
+  - {fileID: 1947174521}
